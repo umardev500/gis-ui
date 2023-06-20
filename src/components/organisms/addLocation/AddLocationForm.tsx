@@ -3,10 +3,11 @@ import {colors} from '@constants/colors';
 import {MAPBOX_TOKEN} from '@env';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import Mapbox, {MapView, setAccessToken} from '@rnmapbox/maps';
+import {setAccessToken} from '@rnmapbox/maps';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {RootStackParamList} from 'src/types';
+import {MapPinPoint} from '../maps';
 
 setAccessToken(MAPBOX_TOKEN);
 
@@ -29,15 +30,14 @@ export const AddLocationForm: React.FC = () => {
         <Text style={styles.label}>Alamat</Text>
         <AddressBtn />
       </View>
-      <View style={styles.mapContainer}>
-        <MapView
-          style={styles.map}
-          onPress={() => {
-            navigation.navigate('PinPoint');
-          }}>
-          <Mapbox.UserLocation />
-        </MapView>
-      </View>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          navigation.navigate('PinPoint');
+        }}>
+        <View style={styles.mapContainer}>
+          <MapPinPoint />
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };
