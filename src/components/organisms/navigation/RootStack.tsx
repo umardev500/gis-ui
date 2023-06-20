@@ -1,14 +1,21 @@
 import {AddLocation, PinPoint} from '@components/pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {BottomTab} from './BottomTab';
 import {RootStackParamList} from 'src/types';
+import {BottomTab} from './BottomTab';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        options={{
+          headerShown: false,
+        }}
+        name="MainScreen"
+        component={BottomTab}
+      />
       <Stack.Screen
         name="AddLocationScreen"
         options={{
@@ -23,7 +30,6 @@ export const RootStack: React.FC = () => {
         }}
         component={PinPoint}
       />
-      <Stack.Screen name="MainScreen" component={BottomTab} />
     </Stack.Navigator>
   );
 };

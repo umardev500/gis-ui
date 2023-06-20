@@ -1,5 +1,5 @@
-import {HomeIcon, PinIcon, CogIcon} from '@components/atoms';
-import {HomePage} from '@components/pages';
+import {CogIcon, HomeIcon, PinIcon} from '@components/atoms';
+import {HomePage, Setting} from '@components/pages';
 import {colors} from '@constants/colors';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
@@ -31,10 +31,12 @@ export const BottomTab: React.FC = () => {
       />
       <Tab.Screen
         options={{
+          headerShown: true,
+          title: 'Pengaturan',
           tabBarIcon: ({color}) => <CogIcon color={color} />,
         }}
-        name="User"
-        component={HomePage}
+        name="Setting"
+        component={Setting}
       />
     </Tab.Navigator>
   );
