@@ -15,6 +15,7 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/native": "^6.1.6",
+    "@react-navigation/stack": "^6.3.16",
     "@rnmapbox/maps": "^10.0.4",
     "@shopify/flash-list": "^1.4.3",
     "react": "18.2.0",
