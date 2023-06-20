@@ -1,13 +1,20 @@
 import {AddressBtn, Input} from '@components/atoms';
 import {colors} from '@constants/colors';
+import {MAPBOX_TOKEN} from '@env';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import Mapbox, {MapView, setAccessToken} from '@rnmapbox/maps';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {MAPBOX_TOKEN} from '@env';
+import {RootStackParamList} from 'src/types';
 
 setAccessToken(MAPBOX_TOKEN);
 
+type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
+
 export const AddLocationForm: React.FC = () => {
+  const navigation = useNavigation<StackProps>();
+
   return (
     <View style={styles.container}>
       <View style={styles.item}>
@@ -23,7 +30,11 @@ export const AddLocationForm: React.FC = () => {
         <AddressBtn />
       </View>
       <View style={styles.mapContainer}>
-        <MapView style={styles.map}>
+        <MapView
+          style={styles.map}
+          onPress={() => {
+            navigation.navigate('PinPoint');
+          }}>
           <Mapbox.UserLocation />
         </MapView>
       </View>
