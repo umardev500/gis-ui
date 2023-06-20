@@ -1,7 +1,11 @@
 import {AddressBtn, Input} from '@components/atoms';
 import {colors} from '@constants/colors';
+import Mapbox, {MapView, setAccessToken} from '@rnmapbox/maps';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {MAPBOX_TOKEN} from '@env';
+
+setAccessToken(MAPBOX_TOKEN);
 
 export const AddLocationForm: React.FC = () => {
   return (
@@ -18,6 +22,11 @@ export const AddLocationForm: React.FC = () => {
         <Text style={styles.label}>Alamat</Text>
         <AddressBtn />
       </View>
+      <View style={styles.mapContainer}>
+        <MapView style={styles.map}>
+          <Mapbox.UserLocation />
+        </MapView>
+      </View>
     </View>
   );
 };
@@ -33,5 +42,11 @@ const styles = StyleSheet.create({
   label: {
     marginBottom: 8,
     color: colors.gray[500],
+  },
+  mapContainer: {
+    height: 200,
+  },
+  map: {
+    flex: 1,
   },
 });
