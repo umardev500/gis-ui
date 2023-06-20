@@ -1,4 +1,6 @@
 import PinIcon from '@assets/icons/red_marker.png';
+import {Button} from '@components/atoms';
+import {colors} from '@constants/colors';
 import {MAPBOX_TOKEN} from '@env';
 import Mapbox, {Location, PointAnnotation} from '@rnmapbox/maps';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
@@ -51,6 +53,10 @@ export const PinPoint: React.FC = () => {
           />
         </PointAnnotation>
       </Mapbox.MapView>
+
+      <View style={styles.btn}>
+        <Button text="Simpan" color={colors.orange[500]} />
+      </View>
     </View>
   );
 };
@@ -62,5 +68,11 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  btn: {
+    position: 'absolute',
+    bottom: 16,
+    left: 16,
+    right: 16,
   },
 });
