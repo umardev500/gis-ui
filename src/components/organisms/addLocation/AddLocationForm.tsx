@@ -1,4 +1,4 @@
-import {AddressBtn, Input} from '@components/atoms';
+import {AddressBtn, Button, Input} from '@components/atoms';
 import {colors} from '@constants/colors';
 import {MAPBOX_TOKEN} from '@env';
 import {useNavigation} from '@react-navigation/native';
@@ -38,6 +38,10 @@ export const AddLocationForm: React.FC = () => {
           <MapPinPoint />
         </View>
       </TouchableWithoutFeedback>
+
+      <View style={styles.btnContainer}>
+        <Button text="Simpan" />
+      </View>
     </View>
   );
 };
@@ -59,5 +63,8 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  btnContainer: {
+    marginTop: 40,
   },
 });
