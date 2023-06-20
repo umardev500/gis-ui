@@ -1,6 +1,18 @@
+import {AddLocationForm} from '@components/organisms';
 import React from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
 export const AddLocation: React.FC = () => {
-  return <View />;
+  return (
+    <View style={styles.container}>
+      <AddLocationForm />
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+});
