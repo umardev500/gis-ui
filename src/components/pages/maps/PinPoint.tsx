@@ -40,7 +40,7 @@ export const PinPoint: React.FC = () => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timeoutId);
   }, []);
