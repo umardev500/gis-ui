@@ -5,9 +5,15 @@ import {OriginProp} from 'src/types';
 
 export const Origin: React.FC = () => {
   const [origin, setOrigin] = useState<OriginProp>({
-    province: 'banten',
-    city: 'pandeglang',
-    district: 'patia',
+    province: {
+      id: 1,
+      name: 'banten',
+    },
+    city: {
+      id: 4,
+      name: 'pandeglang',
+    },
+    district: null,
   });
 
   return (
