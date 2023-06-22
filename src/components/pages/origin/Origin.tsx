@@ -5,8 +5,8 @@ import {OriginProp} from 'src/types';
 
 export const Origin: React.FC = () => {
   const [origin, setOrigin] = useState<OriginProp>({
-    province: 'banten',
-    city: 'pandeglang',
+    province: null,
+    city: null,
     district: null,
   });
 
@@ -14,7 +14,16 @@ export const Origin: React.FC = () => {
     <ScrollView>
       <View style={styles.container}>
         <SelectedOrigin origin={origin} setOrigin={setOrigin} />
-        <OriginList />
+
+        {origin.province === null ? <OriginList title="Provinsi" /> : null}
+        {origin.province !== null ? (
+          <>
+            {origin.city === null ? <OriginList title="Kota" /> : null}
+            {origin.city !== null && origin.district === null ? (
+              <OriginList title="Kecamatan" />
+            ) : null}
+          </>
+        ) : null}
       </View>
     </ScrollView>
   );

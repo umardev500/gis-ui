@@ -2,13 +2,17 @@ import {colors} from '@constants/colors';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-export const OriginList: React.FC = () => {
+interface Props {
+  title: string;
+}
+
+export const OriginList: React.FC<Props> = ({title}) => {
   const data = [...Array(6)];
   const dataLength = data.length - 1;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Kecamatan</Text>
+      <Text style={styles.label}>{title}</Text>
 
       <View style={styles.itemContainer}>
         {data.map((_, i) => (
