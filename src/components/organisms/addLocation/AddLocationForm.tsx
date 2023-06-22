@@ -93,8 +93,8 @@ export const AddLocationForm: React.FC = () => {
       },
       latitude: coords.latitude,
       longitude: coords.longitude,
-      picture: 'pic',
-      thumbnail: 'thumb',
+      picture: uploadData.url,
+      thumbnail: uploadData.thumbUrl,
       description: 'desc',
       createdAt: 16000,
     };
