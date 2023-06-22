@@ -4,11 +4,12 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 interface Props {
   color?: string;
+  colorText?: string;
   text?: string;
   onPress?: () => void;
 }
 
-export const Button: React.FC<Props> = ({color = colors.sky[500], text, onPress}) => {
+export const Button: React.FC<Props> = ({color = colors.red[500], colorText = 'white', text, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <View
@@ -22,7 +23,7 @@ export const Button: React.FC<Props> = ({color = colors.sky[500], text, onPress}
           style={[
             styles.text,
             {
-              color: 'white',
+              color: colorText,
             },
           ]}>
           {text ? text : 'Submit'}
