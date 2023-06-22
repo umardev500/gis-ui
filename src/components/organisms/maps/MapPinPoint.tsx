@@ -20,7 +20,6 @@ export const MapPinPoint = React.memo(({onSelected}: Props) => {
 
   const handlePinPoint = useCallback((feature: any) => {
     if (onSelected !== undefined) {
-      setHasDragged(true);
       onSelected(feature.geometry.coordinates);
     }
   }, []);
@@ -40,6 +39,9 @@ export const MapPinPoint = React.memo(({onSelected}: Props) => {
         coordinate={[location?.coords.longitude ?? 0, location?.coords.latitude ?? 0]}
         title={'Pin point'}
         draggable
+        onDragStart={() => {
+          setHasDragged(true);
+        }}
         onDragEnd={handlePinPoint}
         ref={pinPointRef}>
         <Image
