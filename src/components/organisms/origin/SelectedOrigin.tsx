@@ -36,7 +36,7 @@ export const SelectedOrigin: React.FC<Props> = ({origin}) => {
                   borderBottomColor: colors.gray[200],
                 },
               ]}>
-              <Text style={styles.text}>BANTEN</Text>
+              <Text style={styles.text}>{province}</Text>
             </View>
 
             {/* City check */}
@@ -50,7 +50,7 @@ export const SelectedOrigin: React.FC<Props> = ({origin}) => {
                       borderBottomColor: colors.gray[200],
                     },
                   ]}>
-                  <Text style={styles.text}>PANDEGLANG</Text>
+                  <Text style={styles.text}>{city}</Text>
                 </View>
 
                 {/* District check */}
@@ -63,7 +63,7 @@ export const SelectedOrigin: React.FC<Props> = ({origin}) => {
                         borderBottomColor: colors.gray[200],
                       },
                     ]}>
-                    <Text style={styles.text}>PATIA</Text>
+                    <Text style={styles.text}>{district}</Text>
                   </View>
                 ) : (
                   <View style={styles.item}>
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.gray[600],
+    textTransform: 'uppercase',
   },
   textActive: {
     color: colors.orange[600],

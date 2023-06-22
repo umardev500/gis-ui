@@ -5,9 +5,9 @@ import {OriginProp} from 'src/types';
 
 export const Origin: React.FC = () => {
   const [origin, setOrigin] = useState<OriginProp>({
-    province: null,
-    city: null,
-    district: null,
+    province: 'banten',
+    city: 'pandeglang',
+    district: 'patia',
   });
 
   return (
