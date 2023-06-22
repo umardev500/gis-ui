@@ -4,3 +4,4 @@ export * from './maps';
 export * from './setting';
 export * from './auth';
 export * from './place';
+export * from './origin';

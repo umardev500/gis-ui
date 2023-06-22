@@ -3,5 +3,6 @@ export type RootStackParamList = {
   MainScreen: undefined;
   PinPoint: undefined;
   AddLocationScreen: undefined;
+  OriginScreen: undefined;
   Setting: undefined;
 };

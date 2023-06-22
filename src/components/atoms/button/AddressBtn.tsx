@@ -2,16 +2,22 @@ import {colors} from '@constants/colors';
 import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {ChevronRightIcon} from '../icons';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from 'src/types';
+import {useNavigation} from '@react-navigation/native';
+
+type StackProps = StackNavigationProp<RootStackParamList, 'OriginScreen'>;
 
 export const AddressBtn: React.FC = () => {
+  const navgiation = useNavigation<StackProps>();
   const handleClick = useCallback(() => {
-    console.log('clicked');
+    navgiation.navigate('OriginScreen');
   }, []);
 
   return (
     <TouchableWithoutFeedback onPress={handleClick}>
       <View style={styles.container}>
-        <Text style={styles.text}>BANTEN, KAB. PANDEGLANG, PATIA, 42267</Text>
+        <Text style={styles.text}>Provinsi, Kota, Kecamatan, Kode Pos</Text>
         <ChevronRightIcon color={colors.gray[400]} size={20} />
       </View>
     </TouchableWithoutFeedback>
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14.5,
-    color: colors.gray[600],
+    color: colors.gray[400],
     flex: 1,
     paddingRight: 24,
     lineHeight: 22,

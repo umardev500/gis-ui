@@ -1,4 +1,4 @@
-import {AddLocation, Login, PinPoint} from '@components/pages';
+import {AddLocation, Login, Origin, PinPoint} from '@components/pages';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {RootStackParamList} from 'src/types';
@@ -29,6 +29,13 @@ export const RootStack: React.FC = () => {
           title: 'Tambah Lokasi',
         }}
         component={AddLocation}
+      />
+      <Stack.Screen
+        name="OriginScreen"
+        options={{
+          title: 'Masukan Alamat',
+        }}
+        component={Origin}
       />
       <Stack.Screen
         name="PinPoint"
