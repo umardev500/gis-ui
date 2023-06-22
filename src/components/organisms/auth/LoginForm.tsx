@@ -1,8 +1,18 @@
 import {Button, Input} from '@components/atoms';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {RootStackParamList} from 'src/types';
+
+type StackProps = StackNavigationProp<RootStackParamList, 'MainScreen'>;
 
 export const LoginForm: React.FC = () => {
+  const navigation = useNavigation<StackProps>();
+  const handleSubmit = () => {
+    navigation.navigate('MainScreen');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.itemContainer}>
@@ -10,7 +20,7 @@ export const LoginForm: React.FC = () => {
         <Input placeholder="Password" />
       </View>
       <View style={styles.btnContainer}>
-        <Button />
+        <Button onPress={handleSubmit} />
       </View>
     </View>
   );

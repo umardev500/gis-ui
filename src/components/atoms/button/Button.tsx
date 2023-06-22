@@ -5,11 +5,16 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 interface Props {
   color?: string;
   text?: string;
+  onPress?: () => void;
 }
 
-export const Button: React.FC<Props> = ({color = colors.sky[500], text}) => {
+export const Button: React.FC<Props> = ({
+  color = colors.sky[500],
+  text,
+  onPress,
+}) => {
   return (
-    <TouchableOpacity activeOpacity={0.8}>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <View
         style={[
           styles.container,
