@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from 'react-native';
-import Animated, {
-  SharedValue,
-  interpolate,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import {Dimensions, Image, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import Animated, {SharedValue, interpolate, useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {Item} from 'src/types';
 
 const {width, height} = Dimensions.get('window');
@@ -28,22 +18,11 @@ export const HeroListing: React.FC<Props> = ({url, index, scrollXAnimated}) => {
 
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(scrollXAnimated.value, inputRange, [0.8, 1, 1.3]);
-    const translateX = interpolate(
-      scrollXAnimated.value,
-      inputRange,
-      [50, 0, -100],
-    );
-    const opacity = interpolate(scrollXAnimated.value, inputRange, [
-      1 - 1 / MAX_ITEM,
-      1,
-      0,
-    ]);
+    const translateX = interpolate(scrollXAnimated.value, inputRange, [50, 0, -100]);
+    const opacity = interpolate(scrollXAnimated.value, inputRange, [1 - 1 / MAX_ITEM, 1, 0]);
 
     return {
-      transform: [
-        {translateX: withTiming(translateX)},
-        {scale: withTiming(scale)},
-      ],
+      transform: [{translateX: withTiming(translateX)}, {scale: withTiming(scale)}],
       opacity: withTiming(opacity),
     };
   }, []);

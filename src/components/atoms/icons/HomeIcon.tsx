@@ -8,18 +8,8 @@ interface Props {
   height?: number;
 }
 
-export const HomeIcon: React.FC<Props> = ({
-  color = colors.gray[500],
-  width = 24,
-  height = 24,
-}) => (
-  <Svg
-    fill="none"
-    stroke={color}
-    width={width}
-    height={height}
-    strokeWidth={1.5}
-    viewBox="0 0 24 24">
+export const HomeIcon: React.FC<Props> = ({color = colors.gray[500], width = 24, height = 24}) => (
+  <Svg fill="none" stroke={color} width={width} height={height} strokeWidth={1.5} viewBox="0 0 24 24">
     <Path
       strokeLinecap="round"
       strokeLinejoin="round"

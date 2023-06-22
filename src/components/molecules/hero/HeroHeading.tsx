@@ -1,12 +1,7 @@
 import {colors} from '@constants/colors';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import Animated, {
-  SharedValue,
-  interpolate,
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, {SharedValue, interpolate, useAnimatedStyle, withTiming} from 'react-native-reanimated';
 import {Item} from 'src/types';
 
 const OVERFLOW_HEIGHT = 70;
@@ -18,11 +13,7 @@ interface Props {
 
 export const HeroHeading: React.FC<Props> = ({data, scrollXAnimated}) => {
   const rStyle = useAnimatedStyle(() => {
-    const translateY = interpolate(
-      scrollXAnimated.value,
-      [-1, 0, 1],
-      [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT],
-    );
+    const translateY = interpolate(scrollXAnimated.value, [-1, 0, 1], [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT]);
 
     return {
       transform: [

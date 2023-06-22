@@ -18,17 +18,11 @@ export const MapPinPoint: React.FC = () => {
 
   return (
     <Mapbox.MapView style={styles.map}>
-      <Mapbox.UserLocation
-        visible={false}
-        onUpdate={newLocation => setLocation(newLocation)}
-      />
+      <Mapbox.UserLocation visible={false} onUpdate={newLocation => setLocation(newLocation)} />
       <Mapbox.Camera followZoomLevel={ZOOM_LEVEL} followUserLocation />
       <PointAnnotation
         id={'pin'}
-        coordinate={[
-          location?.coords.longitude ?? 0,
-          location?.coords.latitude ?? 0,
-        ]}
+        coordinate={[location?.coords.longitude ?? 0, location?.coords.latitude ?? 0]}
         title={'Pin point'}
         draggable
         onDragEnd={handlePinPoint}

@@ -8,11 +8,7 @@ interface Props {
   onPress?: () => void;
 }
 
-export const Button: React.FC<Props> = ({
-  color = colors.sky[500],
-  text,
-  onPress,
-}) => {
+export const Button: React.FC<Props> = ({color = colors.sky[500], text, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <View

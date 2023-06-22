@@ -21,7 +21,11 @@ export const AddressBtn: React.FC = () => {
   return (
     <TouchableWithoutFeedback onPress={handleClick}>
       <View style={styles.container}>
-        {origin !== undefined ? <Text style={[styles.text, styles.textOn]}>{`${origin.province?.name}, ${origin.city?.name}, ${origin.district?.name}`}</Text> : <Text style={styles.text}>Provinsi, Kota, Kecamatan, Kode Pos</Text>}
+        {origin !== undefined ? (
+          <Text style={[styles.text, styles.textOn]}>{`${origin.province?.name}, ${origin.city?.name}, ${origin.district?.name}`}</Text>
+        ) : (
+          <Text style={styles.text}>Provinsi, Kota, Kecamatan, Kode Pos</Text>
+        )}
         <ChevronRightIcon color={colors.gray[400]} size={20} />
       </View>
     </TouchableWithoutFeedback>

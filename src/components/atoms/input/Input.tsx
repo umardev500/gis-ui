@@ -9,12 +9,7 @@ interface Props {
   rightIcon?: React.ReactElement;
 }
 
-export const Input: React.FC<Props> = ({
-  placeholder,
-  containerStyles,
-  editable = true,
-  rightIcon,
-}) => {
+export const Input: React.FC<Props> = ({placeholder, containerStyles, editable = true, rightIcon}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = useCallback(() => {
@@ -26,20 +21,8 @@ export const Input: React.FC<Props> = ({
   }, []);
 
   return (
-    <View
-      style={[
-        containerStyles,
-        styles.container,
-        isFocused ? styles.containerFocused : styles.containerUnFocused,
-      ]}>
-      <TextInput
-        editable={editable}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        style={[styles.input]}
-        placeholderTextColor={colors.gray[400]}
-        placeholder={placeholder}
-      />
+    <View style={[containerStyles, styles.container, isFocused ? styles.containerFocused : styles.containerUnFocused]}>
+      <TextInput editable={editable} onFocus={handleFocus} onBlur={handleBlur} style={[styles.input]} placeholderTextColor={colors.gray[400]} placeholder={placeholder} />
 
       {rightIcon}
     </View>
