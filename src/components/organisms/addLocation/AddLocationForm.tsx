@@ -4,7 +4,7 @@ import {MAPBOX_TOKEN} from '@env';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {setAccessToken} from '@rnmapbox/maps';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import {RootStackParamList} from 'src/types';
 import {MapPinPoint} from '../maps';
@@ -14,7 +14,16 @@ setAccessToken(MAPBOX_TOKEN);
 type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 
 export const AddLocationForm: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation<StackProps>();
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeOut);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -35,7 +44,7 @@ export const AddLocationForm: React.FC = () => {
           navigation.navigate('PinPoint');
         }}>
         <View style={styles.mapContainer}>
-          <MapPinPoint />
+          {!isLoading ? <MapPinPoint /> : null}
         </View>
       </TouchableWithoutFeedback>
 
