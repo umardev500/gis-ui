@@ -1,11 +1,13 @@
 import {AddressBtn, Button, Input} from '@components/atoms';
 import {colors} from '@constants/colors';
+import {OriginContext, OriginContextProp} from '@context/OriginContext';
 import {MAPBOX_TOKEN} from '@env';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {setAccessToken} from '@rnmapbox/maps';
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {StyleSheet, Text, ToastAndroid, TouchableWithoutFeedback, View} from 'react-native';
+import {useSharedValue} from 'react-native-reanimated';
 import {RootStackParamList} from 'src/types';
 import {MapPinPoint} from '../maps';
 
@@ -16,6 +18,12 @@ type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 export const AddLocationForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation<StackProps>();
+  // inputs ref
+  const nameValue = useSharedValue('');
+  const phoneValue = useSharedValue('');
+
+  // context
+  const originContext = useContext(OriginContext) as OriginContextProp;
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -25,15 +33,27 @@ export const AddLocationForm: React.FC = () => {
     return () => clearTimeout(timeOut);
   }, []);
 
+  const handleSubmit = () => {
+    const origin = originContext.origin;
+    const coords = originContext.coords;
+    const isFilledAll = nameValue.value !== '' && phoneValue.value !== '' && origin !== undefined && coords !== undefined;
+
+    if (!isFilledAll) {
+      console.log(origin);
+      ToastAndroid.show('Isi semua data', ToastAndroid.SHORT);
+      return;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.item}>
         <Text style={styles.label}>Nama Lokasi</Text>
-        <Input placeholder="Masukan nama lokasi" />
+        <Input inputValue={nameValue} placeholder="Masukan nama lokasi" />
       </View>
       <View style={styles.item}>
         <Text style={styles.label}>Nomor Telepon</Text>
-        <Input placeholder="08***" />
+        <Input inputValue={phoneValue} placeholder="08***" />
       </View>
       <View style={styles.item}>
         <Text style={styles.label}>Alamat</Text>
@@ -47,7 +67,7 @@ export const AddLocationForm: React.FC = () => {
       </TouchableWithoutFeedback>
 
       <View style={styles.btnContainer}>
-        <Button text="Simpan" />
+        <Button onPress={handleSubmit} text="Simpan" />
       </View>
     </View>
   );

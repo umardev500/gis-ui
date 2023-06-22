@@ -18,8 +18,6 @@ export const AddressBtn: React.FC = () => {
   const originContext = useContext(OriginContext) as OriginContextProp;
   const origin = originContext.origin;
 
-  console.log('context:', originContext);
-
   return (
     <TouchableWithoutFeedback onPress={handleClick}>
       <View style={styles.container}>
