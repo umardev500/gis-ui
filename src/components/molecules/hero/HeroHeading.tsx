@@ -42,7 +42,7 @@ export const HeroHeading: React.FC<Props> = ({data, scrollXAnimated}) => {
               <Text numberOfLines={1} style={styles.title}>
                 {item.title}
               </Text>
-              <Text numberOfLines={1}>{item.location}</Text>
+              <Text numberOfLines={1}>Senayan, Jakarta</Text>
             </View>
             <View>
               <Text style={styles.createdAt}>2 Sep, 2023</Text>

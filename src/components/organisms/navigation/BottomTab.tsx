@@ -1,5 +1,5 @@
 import {CogIcon, HomeIcon, PinIcon} from '@components/atoms';
-import {HomePage, Setting} from '@components/pages';
+import {HomePage, Place, Setting} from '@components/pages';
 import {colors} from '@constants/colors';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
@@ -27,7 +27,7 @@ export const BottomTab: React.FC = () => {
           tabBarIcon: ({color}) => <PinIcon color={color} />,
         }}
         name="Place"
-        component={HomePage}
+        component={Place}
       />
       <Tab.Screen
         options={{
