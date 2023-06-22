@@ -10,6 +10,8 @@ module.exports = {
           '@assets': './assets',
           '@constants': './src/constants',
           '@context': './src/context',
+          '@hooks': './src/hooks',
+          '@helpers': './src/helpers',
         },
       },
     ],

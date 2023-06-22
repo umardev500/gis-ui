@@ -8,8 +8,9 @@ import {setAccessToken} from '@rnmapbox/maps';
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, Text, ToastAndroid, TouchableWithoutFeedback, View} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
-import {RootStackParamList} from 'src/types';
+import {CustomerPostProps, RootStackParamList} from 'src/types';
 import {MapPinPoint} from '../maps';
+import {useCreateCustomer} from '@hooks/api';
 
 setAccessToken(MAPBOX_TOKEN);
 
@@ -33,16 +34,44 @@ export const AddLocationForm: React.FC = () => {
     return () => clearTimeout(timeOut);
   }, []);
 
+  // post handler
+  const postHandler = useCreateCustomer();
+
   const handleSubmit = () => {
     const origin = originContext.origin;
     const coords = originContext.coords;
     const isFilledAll = nameValue.value !== '' && phoneValue.value !== '' && origin !== undefined && coords !== undefined;
 
     if (!isFilledAll) {
-      console.log(origin);
       ToastAndroid.show('Isi semua data', ToastAndroid.SHORT);
       return;
     }
+
+    const payload: CustomerPostProps = {
+      name: nameValue.value,
+      phone: phoneValue.value,
+      province: {
+        id: origin.province?.id ?? '0',
+        name: origin.province?.name ?? '',
+      },
+      city: {
+        id: origin.city?.id ?? '0',
+        name: origin.city?.name ?? '',
+        province_id: origin.province?.id ?? '0',
+      },
+      district: {
+        id: origin.district?.id ?? '0',
+        name: origin.district?.name ?? '',
+        regency_id: origin.district?.regency_id ?? '0',
+      },
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+      picture: 'pic',
+      thumbnail: 'thumb',
+      description: 'desc',
+      createdAt: 16000,
+    };
+    postHandler(payload);
   };
 
   return (

@@ -1,8 +1,8 @@
 export interface OriginBasic {
   id: string;
-  latitude: number | null;
-  longitude: number | null;
-  alt_name: string;
+  latitude?: number | null;
+  longitude?: number | null;
+  alt_name?: string;
   name: string;
 }
 
