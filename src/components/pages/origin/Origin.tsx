@@ -20,6 +20,7 @@ export const Origin: React.FC = () => {
   const [selectedProvince, setSelectedProvince] = useState<OriginBasic | null>(null);
   const [selectedRegency, setSelectedRegency] = useState<OriginCity | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<OriginDistrict | null>(null);
+  const hasFilledAll = selectedProvince !== null && selectedRegency !== null && selectedDistrict !== null;
 
   // context
   const originContext = useContext(OriginContext) as OriginContextProp;
@@ -78,9 +79,11 @@ export const Origin: React.FC = () => {
           </>
         ) : null}
       </View>
-      <View style={styles.btnContainer}>
-        <Button onPress={handleSubmit} text="Simpan" />
-      </View>
+      {hasFilledAll ? (
+        <View style={styles.btnContainer}>
+          <Button onPress={handleSubmit} text="Simpan" />
+        </View>
+      ) : null}
     </ScrollView>
   );
 };
