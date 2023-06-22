@@ -11,7 +11,7 @@ import {StyleSheet, Text, ToastAndroid, TouchableWithoutFeedback, View} from 're
 import {TextInput} from 'react-native-gesture-handler';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {useSharedValue} from 'react-native-reanimated';
-import {CustomerPostProps, RootStackParamList} from 'src/types';
+import {Coords, CustomerPostProps, RootStackParamList} from 'src/types';
 import {MapPinPoint} from '../maps';
 
 setAccessToken(MAPBOX_TOKEN);
@@ -31,6 +31,12 @@ export const AddLocationForm: React.FC = () => {
   // inputs ref
   const nameRef = useRef<TextInput>(null);
   const phoneRef = useRef<TextInput>(null);
+
+  // current map location
+  const currentCoords = useSharedValue<Coords>({
+    latitude: 0,
+    longitude: 0,
+  });
 
   // context
   const originContext = useContext(OriginContext) as OriginContextProp;
@@ -57,7 +63,7 @@ export const AddLocationForm: React.FC = () => {
 
   const handleSubmit = () => {
     const origin = originContext.origin;
-    const coords = originContext.coords;
+    const coords = originContext.coords ?? currentCoords.value;
     const isFilledAll = nameValue.value !== '' && phoneValue.value !== '' && origin !== undefined && coords !== undefined && uploadData !== undefined;
 
     if (!isFilledAll) {
@@ -131,6 +137,13 @@ export const AddLocationForm: React.FC = () => {
     });
   };
 
+  const handleMapUpdate = (coords: any) => {
+    currentCoords.value = {
+      latitude: coords.latitude,
+      longitude: coords.longitude,
+    };
+  };
+
   const uploadBtnText = uploadData !== undefined ? 'Ganti gambar' : 'Select picture';
 
   return (
@@ -154,7 +167,7 @@ export const AddLocationForm: React.FC = () => {
         }}>
         <View>
           <View pointerEvents="none" style={styles.mapContainer}>
-            {!isLoading ? <MapPinPoint /> : null}
+            {!isLoading ? <MapPinPoint onUpdated={handleMapUpdate} /> : null}
           </View>
         </View>
       </TouchableWithoutFeedback>

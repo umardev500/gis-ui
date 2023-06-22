@@ -11,9 +11,10 @@ const ZOOM_LEVEL = 12;
 
 interface Props {
   onSelected?: (coords: any) => void;
+  onUpdated?: (coords: any) => void;
 }
 
-export const MapPinPoint = React.memo(({onSelected}: Props) => {
+export const MapPinPoint = React.memo(({onSelected, onUpdated}: Props) => {
   const pinPointRef = useRef<PointAnnotation>(null);
   const [location, setLocation] = useState<Location>();
   const [hasDragged, setHasDragged] = useState(false);
@@ -25,6 +26,10 @@ export const MapPinPoint = React.memo(({onSelected}: Props) => {
   }, []);
 
   const handleUpdate = (newLocation: Mapbox.Location) => {
+    if (onUpdated !== undefined) {
+      onUpdated(newLocation.coords);
+    }
+
     if (!hasDragged) {
       setLocation(newLocation);
     }
