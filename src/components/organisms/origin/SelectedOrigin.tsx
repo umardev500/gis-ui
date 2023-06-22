@@ -2,16 +2,15 @@ import {ChevronRightIcon} from '@components/atoms';
 import {colors} from '@constants/colors';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {OriginProp} from 'src/types';
+import {OriginBasic, OriginCity, OriginDistrict} from 'src/types';
 
 interface Props {
-  origin: OriginProp;
-  setOrigin: React.Dispatch<React.SetStateAction<OriginProp>>;
+  province: OriginBasic | null;
+  city: OriginCity | null;
+  district: OriginDistrict | null;
 }
 
-export const SelectedOrigin: React.FC<Props> = ({origin}) => {
-  const {province, city, district} = origin;
-
+export const SelectedOrigin: React.FC<Props> = ({province, city, district}) => {
   return (
     <View style={styles.container}>
       <View

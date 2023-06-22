@@ -1,29 +1,39 @@
 import {colors} from '@constants/colors';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {OriginBasic, OriginCity, OriginDistrict} from 'src/types';
 
 interface Props {
   title: string;
+  origin: OriginBasic[] | OriginCity[] | OriginDistrict[];
+  onSelect?: (origin?: OriginBasic | OriginCity | OriginDistrict) => void;
 }
 
-export const OriginList: React.FC<Props> = ({title}) => {
+export const OriginList: React.FC<Props> = ({origin, title, onSelect}) => {
   const data = [...Array(6)];
   const dataLength = data.length - 1;
+
+  const handleSelect = (originSelected: OriginBasic | OriginCity | OriginDistrict) => {
+    if (onSelect !== undefined) {
+      onSelect(originSelected);
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{title}</Text>
 
       <View style={styles.itemContainer}>
-        {data.map((_, i) => (
-          <View
+        {origin.map((item, i) => (
+          <TouchableOpacity
             key={i}
-            style={[
-              styles.item,
-              i !== dataLength ? styles.itemWithBorder : {},
-            ]}>
-            <Text>PATIA</Text>
-          </View>
+            onPress={() => {
+              handleSelect(item);
+            }}>
+            <View style={[styles.item, i !== dataLength ? styles.itemWithBorder : {}]}>
+              <Text>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
