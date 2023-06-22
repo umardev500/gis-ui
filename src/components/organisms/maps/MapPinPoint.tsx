@@ -9,11 +9,18 @@ const MARKER_WIDTH = 60 * 0.4;
 const MARKER_HEIGHT = 96 * 0.4;
 const ZOOM_LEVEL = 12;
 
-export const MapPinPoint: React.FC = () => {
+interface Props {
+  onSelected?: (coords: any) => void;
+}
+
+export const MapPinPoint: React.FC<Props> = ({onSelected}) => {
   const pinPointRef = useRef<PointAnnotation>(null);
   const [location, setLocation] = useState<Location>();
+
   const handlePinPoint = useCallback((feature: any) => {
-    console.log('onDragEnd:', feature.id, feature.geometry.coordinates);
+    if (onSelected !== undefined) {
+      onSelected(feature.geometry.coordinates);
+    }
   }, []);
 
   return (

@@ -19,3 +19,8 @@ export interface OriginProp {
   city?: OriginCity | null;
   district?: OriginDistrict | null;
 }
+
+export interface Coords {
+  longitude: number;
+  latitude: number;
+}
