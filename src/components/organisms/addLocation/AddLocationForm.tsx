@@ -44,6 +44,7 @@ export const AddLocationForm: React.FC = () => {
 
     if (!isFilledAll) {
       ToastAndroid.show('Isi semua data', ToastAndroid.SHORT);
+
       return;
     }
 
@@ -71,7 +72,11 @@ export const AddLocationForm: React.FC = () => {
       description: 'desc',
       createdAt: 16000,
     };
-    postHandler(payload);
+    postHandler(payload)
+      .then(res => ToastAndroid.show(res.message, ToastAndroid.SHORT))
+      .catch(err => {
+        ToastAndroid.show(err, ToastAndroid.SHORT);
+      });
   };
 
   return (
