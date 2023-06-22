@@ -13,19 +13,27 @@ interface Props {
   onSelected?: (coords: any) => void;
 }
 
-export const MapPinPoint: React.FC<Props> = ({onSelected}) => {
+export const MapPinPoint = React.memo(({onSelected}: Props) => {
   const pinPointRef = useRef<PointAnnotation>(null);
   const [location, setLocation] = useState<Location>();
+  const [hasDragged, setHasDragged] = useState(false);
 
   const handlePinPoint = useCallback((feature: any) => {
     if (onSelected !== undefined) {
+      setHasDragged(true);
       onSelected(feature.geometry.coordinates);
     }
   }, []);
 
+  const handleUpdate = (newLocation: Mapbox.Location) => {
+    if (!hasDragged) {
+      setLocation(newLocation);
+    }
+  };
+
   return (
     <Mapbox.MapView style={styles.map}>
-      <Mapbox.UserLocation visible={false} onUpdate={newLocation => setLocation(newLocation)} />
+      <Mapbox.UserLocation visible={false} onUpdate={handleUpdate} />
       <Mapbox.Camera followZoomLevel={ZOOM_LEVEL} followUserLocation />
       <PointAnnotation
         id={'pin'}
@@ -44,7 +52,8 @@ export const MapPinPoint: React.FC<Props> = ({onSelected}) => {
       </PointAnnotation>
     </Mapbox.MapView>
   );
-};
+});
+
 const styles = StyleSheet.create({
   map: {
     flex: 1,
