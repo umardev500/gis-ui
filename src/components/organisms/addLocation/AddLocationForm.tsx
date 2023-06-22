@@ -52,6 +52,7 @@ export const AddLocationForm: React.FC = () => {
     phoneRef.current?.clear();
     originContext.setCoords(undefined);
     originContext.setOrigin(undefined);
+    setUploadData(undefined);
   };
 
   const handleSubmit = () => {
