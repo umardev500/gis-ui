@@ -4,3 +4,4 @@ export * from './navigation';
 export * from './addLocation';
 export * from './maps';
 export * from './setting';
+export * from './auth';
