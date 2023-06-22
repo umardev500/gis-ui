@@ -1,10 +1,11 @@
 import {colors} from '@constants/colors';
-import React, {useCallback} from 'react';
-import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
-import {ChevronRightIcon} from '../icons';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from 'src/types';
+import {OriginContext, OriginContextProp} from '@context/OriginContext';
 import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback, useContext} from 'react';
+import {StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {RootStackParamList} from 'src/types';
+import {ChevronRightIcon} from '../icons';
 
 type StackProps = StackNavigationProp<RootStackParamList, 'OriginScreen'>;
 
@@ -14,10 +15,13 @@ export const AddressBtn: React.FC = () => {
     navgiation.navigate('OriginScreen');
   }, []);
 
+  const originContext = useContext(OriginContext) as OriginContextProp;
+  const origin = originContext.origin;
+
   return (
     <TouchableWithoutFeedback onPress={handleClick}>
       <View style={styles.container}>
-        <Text style={styles.text}>Provinsi, Kota, Kecamatan, Kode Pos</Text>
+        {origin !== undefined ? <Text style={[styles.text, styles.textOn]}>{`${origin.province?.name}, ${origin.city?.name}, ${origin.district?.name}`}</Text> : <Text style={styles.text}>Provinsi, Kota, Kecamatan, Kode Pos</Text>}
         <ChevronRightIcon color={colors.gray[400]} size={20} />
       </View>
     </TouchableWithoutFeedback>
@@ -42,5 +46,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 24,
     lineHeight: 22,
+  },
+  textOn: {
+    color: colors.gray[600],
   },
 });

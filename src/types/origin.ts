@@ -15,7 +15,7 @@ export interface OriginDistrict extends OriginBasic {
 }
 
 export interface OriginProp {
-  province: OriginBasic | null;
-  city: OriginCity | null;
-  district: OriginDistrict | null;
+  province?: OriginBasic | null;
+  city?: OriginCity | null;
+  district?: OriginDistrict | null;
 }

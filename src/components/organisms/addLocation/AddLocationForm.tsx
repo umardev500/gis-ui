@@ -43,9 +43,7 @@ export const AddLocationForm: React.FC = () => {
         onPress={() => {
           navigation.navigate('PinPoint');
         }}>
-        <View style={styles.mapContainer}>
-          {!isLoading ? <MapPinPoint /> : null}
-        </View>
+        <View style={styles.mapContainer}>{!isLoading ? <MapPinPoint /> : null}</View>
       </TouchableWithoutFeedback>
 
       <View style={styles.btnContainer}>

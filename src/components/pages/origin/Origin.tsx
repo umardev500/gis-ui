@@ -1,10 +1,16 @@
 import district from '@assets/geo/districts.json';
 import province from '@assets/geo/provinces.json';
 import city from '@assets/geo/regencies.json';
+import {Button} from '@components/atoms';
 import {OriginList, SelectedOrigin} from '@components/organisms';
-import React, {useEffect, useState} from 'react';
+import {OriginContext, OriginContextProp} from '@context/OriginContext';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useContext, useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {OriginBasic, OriginCity, OriginDistrict} from 'src/types';
+import {OriginBasic, OriginCity, OriginDistrict, RootStackParamList} from 'src/types';
+
+type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 
 export const Origin: React.FC = () => {
   const [provinces] = useState<OriginBasic[]>(province);
@@ -14,6 +20,11 @@ export const Origin: React.FC = () => {
   const [selectedProvince, setSelectedProvince] = useState<OriginBasic | null>(null);
   const [selectedRegency, setSelectedRegency] = useState<OriginCity | null>(null);
   const [selectedDistrict, setSelectedDistrict] = useState<OriginDistrict | null>(null);
+
+  // context
+  const originContext = useContext(OriginContext) as OriginContextProp;
+  // navigation
+  const navigation = useNavigation<StackProps>();
 
   // watch province select
   useEffect(() => {
@@ -44,6 +55,16 @@ export const Origin: React.FC = () => {
     }
   };
 
+  const handleSubmit = () => {
+    originContext.setOrigin({
+      province: selectedProvince,
+      city: selectedRegency,
+      district: selectedDistrict,
+    });
+
+    navigation.goBack();
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -57,6 +78,9 @@ export const Origin: React.FC = () => {
           </>
         ) : null}
       </View>
+      <View style={styles.btnContainer}>
+        <Button onPress={handleSubmit} text="Simpan" />
+      </View>
     </ScrollView>
   );
 };
@@ -65,5 +89,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 16,
+  },
+  btnContainer: {
+    paddingHorizontal: 16,
   },
 });
