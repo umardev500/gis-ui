@@ -7,10 +7,7 @@ const menus: SettingMenu[] = [
   {
     title: 'Tambah Data',
     level: 'all',
-  },
-  {
-    title: 'Logout',
-    level: 'all',
+    screen: 'AddLocationScreen',
   },
 ];
 

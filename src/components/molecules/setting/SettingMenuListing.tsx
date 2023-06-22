@@ -1,14 +1,20 @@
 import {ChevronRightIcon} from '@components/atoms';
 import {colors} from '@constants/colors';
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import React, {useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {SettingMenu} from 'src/types';
+import {RootStackParamList, SettingMenu} from 'src/types';
 
-interface Props extends SettingMenu {
-  onPress?: () => void;
-}
+interface Props extends SettingMenu {}
+type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 
-export const SettingMenuListing: React.FC<Props> = ({title, onPress}) => {
+export const SettingMenuListing: React.FC<Props> = ({title, screen}) => {
+  const navigation = useNavigation<StackProps>();
+  const onPress = useCallback(() => {
+    navigation.navigate(screen);
+  }, []);
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.item}>
