@@ -4,7 +4,7 @@ import {ScrollView, StyleSheet, View} from 'react-native';
 
 export const AddLocation: React.FC = () => {
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollView}>
       <View style={styles.container}>
         <AddLocationForm />
       </View>
@@ -15,6 +15,8 @@ export const AddLocation: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollView: {
     backgroundColor: 'white',
   },
 });
