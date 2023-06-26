@@ -4,7 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {CustomerProp} from 'src/types';
 
 interface Props {
-  customers?: CustomerProp[];
+  customers?: CustomerProp[] | null;
 }
 
 export const CardList: React.FC<Props> = ({customers}) => {

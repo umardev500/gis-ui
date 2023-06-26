@@ -15,6 +15,7 @@ interface Props extends CustomerProp {
 
 export const CardListing: React.FC<Props> = ({index, thumbnail}) => {
   const even = index % 2 !== 0;
+  console.log('thumbnail:', thumbnail);
 
   return (
     <View

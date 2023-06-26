@@ -19,6 +19,6 @@ export interface CustomerProp {
 export interface CustomerPostProps extends Omit<CustomerProp, 'id'> {}
 
 export interface GetCustomersResponse extends APIResponse {
-  data: CustomerProp[];
+  data: CustomerProp[] | null;
   meta: APIMeta;
 }

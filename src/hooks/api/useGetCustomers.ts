@@ -1,5 +1,5 @@
 import {getBase} from '@helpers';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {ToastAndroid} from 'react-native';
 import {GetCustomersResponse} from 'src/types';
 
@@ -12,7 +12,6 @@ export const useGetCustomers = () => {
     try {
       const response = await fetch(endpoint);
       const jsonData: GetCustomersResponse = await response.json();
-      console.log('data:', jsonData);
 
       if (!jsonData.success) {
         return Promise.reject(new Error(jsonData.error));
@@ -24,9 +23,11 @@ export const useGetCustomers = () => {
     }
   };
 
-  handler().catch(() => {
-    ToastAndroid.show('Failed to get customers', ToastAndroid.SHORT);
-  });
+  useEffect(() => {
+    handler().catch(() => {
+      ToastAndroid.show('Failed to get customers', ToastAndroid.SHORT);
+    });
+  }, []);
 
   return customers;
 };

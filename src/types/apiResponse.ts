@@ -1,5 +1,5 @@
 export interface APIMeta {
-  total: string;
+  total: number;
 }
 
 export interface APIResponse {

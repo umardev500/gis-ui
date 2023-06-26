@@ -45,7 +45,7 @@ const data: Item[] = [
 export const HomePage: React.FC = () => {
   const scrollXAnimated = useSharedValue(1);
   const customerResponse = useGetCustomers();
-  const hasCustomerData = (customerResponse?.data.length ?? 0) > 0;
+  const hasCustomerData = (customerResponse?.meta.total ?? 0) > 0;
 
   return (
     <ScrollView style={styles.scrollView}>
