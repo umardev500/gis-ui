@@ -4,6 +4,7 @@ export interface APIMeta {
 
 export interface APIResponse {
   success: boolean;
+  status: number;
   error: string;
   message: string;
 }

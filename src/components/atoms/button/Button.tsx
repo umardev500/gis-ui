@@ -7,9 +7,12 @@ interface Props {
   colorText?: string;
   text?: string;
   onPress?: () => void;
+  loading?: boolean;
 }
 
-export const Button: React.FC<Props> = ({color = colors.red[500], colorText = 'white', text, onPress}) => {
+export const Button: React.FC<Props> = ({color = colors.red[500], colorText = 'white', text, loading = false, onPress}) => {
+  text = loading ? 'Loading...' : text;
+
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
       <View
