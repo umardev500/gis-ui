@@ -1,4 +1,4 @@
-import {ArrowRightIcon} from '@components/atoms';
+import {ArrowRightIcon, Message} from '@components/atoms';
 import {HeroHeading} from '@components/molecules';
 import {CardList, Hero} from '@components/organisms';
 import {colors} from '@constants/colors';
@@ -45,9 +45,10 @@ const data: Item[] = [
 export const HomePage: React.FC = () => {
   const scrollXAnimated = useSharedValue(1);
   const customerResponse = useGetCustomers();
+  const hasCustomerData = (customerResponse?.data.length ?? 0) > 0;
 
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <HeroHeading scrollXAnimated={scrollXAnimated} data={data} />
         <Hero scrollXAnimated={scrollXAnimated} data={data} />
@@ -56,15 +57,28 @@ export const HomePage: React.FC = () => {
           <ArrowRightIcon />
         </View>
         <CardList customers={customerResponse?.data} />
+        {!hasCustomerData ? (
+          <View style={styles.messageContainer}>
+            <Message text="No data found." />
+          </View>
+        ) : null}
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
+    paddingBottom: 16,
+  },
+  messageContainer: {
+    paddingHorizontal: 24,
   },
   heading: {
     paddingHorizontal: 24,
