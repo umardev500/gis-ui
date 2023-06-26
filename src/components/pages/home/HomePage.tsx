@@ -3,6 +3,7 @@ import {HeroHeading} from '@components/molecules';
 import {CardList, Hero} from '@components/organisms';
 import {colors} from '@constants/colors';
 import {API_URL} from '@env';
+import {useGetCustomers} from '@hooks/api';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
@@ -43,6 +44,7 @@ const data: Item[] = [
 
 export const HomePage: React.FC = () => {
   const scrollXAnimated = useSharedValue(1);
+  const customerResponse = useGetCustomers();
 
   return (
     <ScrollView>
@@ -53,7 +55,7 @@ export const HomePage: React.FC = () => {
           <Text style={styles.title}>Update Terbaru</Text>
           <ArrowRightIcon />
         </View>
-        <CardList />
+        <CardList customers={customerResponse?.data} />
       </View>
     </ScrollView>
   );

@@ -1,6 +1,9 @@
+export interface APIMeta {
+  total: string;
+}
+
 export interface APIResponse {
   success: boolean;
-  data: any;
   error: string;
   message: string;
 }

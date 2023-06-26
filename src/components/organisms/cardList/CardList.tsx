@@ -1,42 +1,17 @@
 import {CardListing} from '@components/molecules';
-import {API_URL} from '@env';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Item} from 'src/types';
+import {CustomerProp} from 'src/types';
 
-const data: Item[] = [
-  {
-    title: '',
-    url: `${API_URL}/thumbs/thumb.jpg`,
-    createdTime: 1629089389,
-  },
-  {
-    title: '',
-    url: `${API_URL}/thumbs/thumb-3.jpg`,
-    createdTime: 1629089389,
-  },
-  {
-    title: '',
-    url: `${API_URL}/thumbs/thumb-4.jpg`,
-    createdTime: 1629089389,
-  },
-  {
-    title: '',
-    url: `${API_URL}/thumbs/thumb-5.jpg`,
-    createdTime: 1629089389,
-  },
-  {
-    title: '',
-    url: `${API_URL}/thumbs/thumb-1.jpg`,
-    createdTime: 1629089389,
-  },
-];
+interface Props {
+  customers?: CustomerProp[];
+}
 
-export const CardList: React.FC = () => {
+export const CardList: React.FC<Props> = ({customers}) => {
   return (
     <View style={styles.container}>
       <View style={styles.list}>
-        {data.map((item, i) => (
+        {customers?.map((item, i) => (
           <CardListing {...item} key={i} index={i} />
         ))}
       </View>

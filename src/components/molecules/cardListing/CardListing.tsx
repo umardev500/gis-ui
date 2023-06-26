@@ -1,7 +1,7 @@
 import {colors} from '@constants/colors';
 import React from 'react';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
-import {Item} from 'src/types';
+import {CustomerProp} from 'src/types';
 
 const {width} = Dimensions.get('window');
 const SPACING = 24;
@@ -9,11 +9,11 @@ const GAP = 16;
 const ITEM_WIDTH = width / 2 - SPACING - GAP / 2;
 const ITEM_HEIGHT = 250;
 
-interface Props extends Item {
+interface Props extends CustomerProp {
   index: number;
 }
 
-export const CardListing: React.FC<Props> = ({index, url}) => {
+export const CardListing: React.FC<Props> = ({index, thumbnail}) => {
   const even = index % 2 !== 0;
 
   return (
@@ -25,7 +25,7 @@ export const CardListing: React.FC<Props> = ({index, url}) => {
           marginLeft: !even ? SPACING : 0,
         },
       ]}>
-      <Image style={styles.thumb} source={{uri: url}} />
+      <Image style={styles.thumb} source={{uri: thumbnail}} />
       <View style={styles.desc}>
         <Text numberOfLines={1} style={styles.title}>
           Gelora Bung Karno

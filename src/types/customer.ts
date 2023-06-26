@@ -1,6 +1,8 @@
+import {APIMeta, APIResponse} from './apiResponse';
 import {OriginBasic, OriginCity, OriginDistrict} from './origin';
 
-export interface CustomerPostProps {
+export interface CustomerProp {
+  id: string;
   name: string;
   phone: string;
   province: OriginBasic;
@@ -12,4 +14,11 @@ export interface CustomerPostProps {
   thumbnail: string;
   description: string;
   createdAt: number;
+}
+
+export interface CustomerPostProps extends Omit<CustomerProp, 'id'> {}
+
+export interface GetCustomersResponse extends APIResponse {
+  data: CustomerProp[];
+  meta: APIMeta;
 }
