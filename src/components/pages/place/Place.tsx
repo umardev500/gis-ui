@@ -1,20 +1,27 @@
 import {CardList} from '@components/organisms';
 import {colors} from '@constants/colors';
+import {useGetCustomers} from '@hooks/api';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 
 export const Place: React.FC = () => {
+  const customerResponse = useGetCustomers();
+
   return (
-    <ScrollView>
+    <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <Text style={styles.title}>Lokasi Customer</Text>
-        <CardList />
+        <CardList customers={customerResponse?.data} />
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -24,7 +31,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.gray[600],
     paddingHorizontal: 24,
-    marginBottom: 16,
+    marginBottom: 24,
     marginTop: 24,
   },
 });
