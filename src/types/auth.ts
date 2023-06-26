@@ -7,6 +7,9 @@ export interface AuthRequest {
 }
 
 export interface AuthResponse extends APIResponse {
-  data: UserProp | null;
+  data: {
+    token: string;
+    data: UserProp;
+  } | null;
   meta: APIMeta;
 }

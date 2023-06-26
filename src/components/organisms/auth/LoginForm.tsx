@@ -1,5 +1,6 @@
 import {Button, Input} from '@components/atoms';
 import {useLogin} from '@hooks/api';
+import {useLocalStorage} from '@hooks/storage';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
@@ -15,6 +16,8 @@ export const LoginForm: React.FC = () => {
   const usernameValue = useSharedValue('');
   const passwordValue = useSharedValue('');
 
+  const storage = useLocalStorage();
+
   const handleSubmit = async () => {
     const payload: AuthRequest = {
       username: usernameValue.value,
@@ -24,6 +27,8 @@ export const LoginForm: React.FC = () => {
     try {
       const response = await handler(payload);
       if (response.status !== 404) {
+        storage.set('token', response.data?.token ?? '');
+
         navigation.navigate('MainScreen');
         return;
       }
