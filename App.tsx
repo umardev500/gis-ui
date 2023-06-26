@@ -1,4 +1,5 @@
 import {RootStack} from '@components/organisms';
+import {AuthProvider} from '@context/AuthContext';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
@@ -9,7 +10,9 @@ const App: React.FC = () => {
     <GestureHandlerRootView style={styles.container}>
       <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
       <NavigationContainer>
-        <RootStack />
+        <AuthProvider>
+          <RootStack />
+        </AuthProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
   );

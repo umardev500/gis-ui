@@ -1,14 +1,16 @@
 import {AddLocation, Login, Origin, PinPoint} from '@components/pages';
+import {AuthContext, AuthContextProps} from '@context/AuthContext';
+import {OriginProvider} from '@context/OriginContext';
 import {createStackNavigator} from '@react-navigation/stack';
-import React from 'react';
+import React, {useContext} from 'react';
 import {RootStackParamList} from 'src/types';
 import {BottomTab} from './BottomTab';
-import {OriginProvider} from '@context/OriginContext';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => {
-  const authenticated = true;
+  const authContext = useContext(AuthContext) as AuthContextProps;
+  const authenticated = authContext.isLogin;
 
   return (
     <OriginProvider>
