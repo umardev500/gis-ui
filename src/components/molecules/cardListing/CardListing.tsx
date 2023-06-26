@@ -1,4 +1,5 @@
 import {colors} from '@constants/colors';
+import {toUpperEachWord} from '@helpers';
 import React from 'react';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import {CustomerProp} from 'src/types';
@@ -13,9 +14,8 @@ interface Props extends CustomerProp {
   index: number;
 }
 
-export const CardListing: React.FC<Props> = ({index, thumbnail}) => {
+export const CardListing: React.FC<Props> = ({index, name, province, city, thumbnail}) => {
   const even = index % 2 !== 0;
-  console.log('thumbnail:', thumbnail);
 
   return (
     <View
@@ -29,9 +29,11 @@ export const CardListing: React.FC<Props> = ({index, thumbnail}) => {
       <Image style={styles.thumb} source={{uri: thumbnail}} />
       <View style={styles.desc}>
         <Text numberOfLines={1} style={styles.title}>
-          Gelora Bung Karno
+          {name}
         </Text>
-        <Text style={styles.location}>Senayan, Jakarta</Text>
+        <Text style={styles.location} numberOfLines={1}>
+          {toUpperEachWord(city.name)}, {toUpperEachWord(province.name)}
+        </Text>
       </View>
     </View>
   );
@@ -40,7 +42,7 @@ export const CardListing: React.FC<Props> = ({index, thumbnail}) => {
 const styles = StyleSheet.create({
   item: {
     width: ITEM_WIDTH,
-    minHeight: ITEM_HEIGHT,
+    maxHeight: ITEM_HEIGHT,
     marginBottom: SPACING,
     backgroundColor: 'white',
     borderRadius: 14,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   thumb: {
-    flex: 1,
+    height: 158,
   },
   desc: {
     marginTop: 0,
@@ -62,6 +64,6 @@ const styles = StyleSheet.create({
   },
   location: {
     fontSize: 14,
-    color: colors.gray[500],
+    color: colors.gray[400],
   },
 });
