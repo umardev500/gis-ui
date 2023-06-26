@@ -44,8 +44,8 @@ const data: Item[] = [
 
 export const HomePage: React.FC = () => {
   const scrollXAnimated = useSharedValue(1);
-  const customerResponse = useGetCustomers();
-  const hasCustomerData = (customerResponse?.meta.total ?? 0) > 0;
+  const {customersResponse} = useGetCustomers();
+  const hasCustomerData = (customersResponse?.meta.total ?? 0) > 0;
 
   return (
     <ScrollView style={styles.scrollView}>
@@ -56,7 +56,7 @@ export const HomePage: React.FC = () => {
           <Text style={styles.title}>Update Terbaru</Text>
           <ArrowRightIcon />
         </View>
-        <CardList customers={customerResponse?.data} />
+        <CardList customers={customersResponse?.data} />
         {!hasCustomerData ? (
           <View style={styles.messageContainer}>
             <Message text="No data found." />

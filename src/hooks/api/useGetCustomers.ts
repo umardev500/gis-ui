@@ -4,7 +4,8 @@ import {ToastAndroid} from 'react-native';
 import {GetCustomersResponse} from 'src/types';
 
 export const useGetCustomers = () => {
-  const [customers, setCustomers] = useState<GetCustomersResponse>();
+  const [customersResponse, setCustomersResponse] = useState<GetCustomersResponse>();
+  const [loading, setLoading] = useState(true);
 
   const endpoint = getBase('/customer?order=desc&limit=1');
 
@@ -17,9 +18,11 @@ export const useGetCustomers = () => {
         return Promise.reject(new Error(jsonData.error));
       }
 
-      setCustomers(jsonData);
+      setCustomersResponse(jsonData);
     } catch (err) {
       return Promise.reject(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -29,5 +32,10 @@ export const useGetCustomers = () => {
     });
   }, []);
 
-  return customers;
+  const data = {
+    customersResponse,
+    loading,
+  };
+
+  return data;
 };
