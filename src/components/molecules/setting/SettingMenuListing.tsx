@@ -9,9 +9,13 @@ import {RootStackParamList, SettingMenu} from 'src/types';
 interface Props extends SettingMenu {}
 type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 
-export const SettingMenuListing: React.FC<Props> = ({title, screen}) => {
+export const SettingMenuListing: React.FC<Props> = ({title, screen, onPressCallback}) => {
   const navigation = useNavigation<StackProps>();
   const onPress = useCallback(() => {
+    if (onPressCallback !== undefined) {
+      onPressCallback();
+      return;
+    }
     navigation.navigate(screen);
   }, []);
 

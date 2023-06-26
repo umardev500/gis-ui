@@ -1,17 +1,26 @@
 import {SettingMenuListing} from '@components/molecules';
+import {useLogout} from '@hooks/index';
 import React, {useCallback} from 'react';
 import {FlatList, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 import {SettingMenu} from 'src/types';
 
-const menus: SettingMenu[] = [
-  {
-    title: 'Tambah Data',
-    level: 'all',
-    screen: 'AddLocationScreen',
-  },
-];
-
 export const SettingMenuList: React.FC = () => {
+  const logout = useLogout();
+
+  const menus: SettingMenu[] = [
+    {
+      title: 'Tambah Data',
+      level: 'all',
+      screen: 'AddLocationScreen',
+    },
+    {
+      title: 'Keluar',
+      level: 'all',
+      screen: 'MainScreen',
+      onPressCallback: logout,
+    },
+  ];
+
   const renderItem = useCallback((info: ListRenderItemInfo<SettingMenu>) => {
     return <SettingMenuListing {...info.item} />;
   }, []);
