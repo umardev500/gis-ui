@@ -91,8 +91,10 @@ export const AddLocationForm: React.FC = () => {
         name: origin.district?.name ?? '',
         regency_id: origin.district?.regency_id ?? '0',
       },
-      latitude: coords.latitude,
-      longitude: coords.longitude,
+      location: {
+        type: 'Point',
+        coordinates: [coords.longitude, coords.latitude],
+      },
       picture: uploadData.url,
       thumbnail: uploadData.thumbUrl,
       description: 'desc',

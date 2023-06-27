@@ -1,6 +1,10 @@
 import {APIMeta, APIResponse} from './apiResponse';
 import {OriginBasic, OriginCity, OriginDistrict} from './origin';
 
+export interface GeoLocation {
+  type: 'Point';
+  coordinates: [longitude: number, latitude: number];
+}
 export interface CustomerProp {
   id: string;
   name: string;
@@ -8,8 +12,7 @@ export interface CustomerProp {
   province: OriginBasic;
   city: OriginCity;
   district: OriginDistrict;
-  longitude: number;
-  latitude: number;
+  location: GeoLocation;
   picture: string;
   thumbnail: string;
   description: string;

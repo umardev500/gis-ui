@@ -19,8 +19,8 @@ export const PinPoint: React.FC = () => {
   const navigation = useNavigation<StackProps>();
 
   const handleSelect = (coords: any) => {
-    const latitude = coords[0];
-    const longitude = coords[1];
+    const longitude = coords[0];
+    const latitude = coords[1];
     setCoordinates({
       latitude,
       longitude,
