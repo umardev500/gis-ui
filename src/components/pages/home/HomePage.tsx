@@ -4,6 +4,7 @@ import {CardList, Hero} from '@components/organisms';
 import {colors} from '@constants/colors';
 import {API_URL} from '@env';
 import {useGetCustomers} from '@hooks/api';
+import {useGetCustomersNearest} from '@hooks/index';
 import React from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
@@ -44,6 +45,7 @@ const data: Item[] = [
 
 export const HomePage: React.FC = () => {
   const scrollXAnimated = useSharedValue(1);
+  const {customersResponse: customersNearResponse} = useGetCustomersNearest();
   const {customersResponse} = useGetCustomers();
   const hasCustomerData = (customersResponse?.meta.total ?? 0) > 0;
 
@@ -51,7 +53,7 @@ export const HomePage: React.FC = () => {
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <HeroHeading scrollXAnimated={scrollXAnimated} data={data} />
-        <Hero scrollXAnimated={scrollXAnimated} data={data} />
+        <Hero customers={customersNearResponse?.data} scrollXAnimated={scrollXAnimated} />
         <View style={styles.heading}>
           <Text style={styles.title}>Update Terbaru</Text>
           <ArrowRightIcon />

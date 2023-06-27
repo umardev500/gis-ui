@@ -1,19 +1,19 @@
 import React from 'react';
 import {Dimensions, Image, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import Animated, {SharedValue, interpolate, useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {Item} from 'src/types';
+import {CustomerProp} from 'src/types';
 
 const {width, height} = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.8;
 const ITEM_HEIGHT = height * 0.6;
 const MAX_ITEM = 3;
 
-interface Props extends Item {
+interface Props extends CustomerProp {
   index: number;
   scrollXAnimated: SharedValue<number>;
 }
 
-export const HeroListing: React.FC<Props> = ({url, index, scrollXAnimated}) => {
+export const HeroListing: React.FC<Props> = ({picture, index, scrollXAnimated}) => {
   const inputRange = [index - 1, index, index + 1];
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -35,7 +35,7 @@ export const HeroListing: React.FC<Props> = ({url, index, scrollXAnimated}) => {
   return (
     <Animated.View style={[styles.item, animatedStyle]}>
       <TouchableWithoutFeedback onPress={handleClick}>
-        <Image style={styles.thumb} source={{uri: url}} />
+        <Image style={styles.thumb} source={{uri: picture}} />
       </TouchableWithoutFeedback>
     </Animated.View>
   );

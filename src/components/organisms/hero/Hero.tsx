@@ -3,30 +3,33 @@ import React, {useCallback} from 'react';
 import {Dimensions, FlatList, ListRenderItemInfo, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Directions, FlingGestureHandler, FlingGestureHandlerEventPayload, HandlerStateChangeEvent, State} from 'react-native-gesture-handler';
 import Animated, {SharedValue} from 'react-native-reanimated';
-import {Item} from 'src/types';
+import {CustomerProp} from 'src/types';
 
 const {height} = Dimensions.get('window');
 const SPACING = 10;
 const ITEM_HEIGHT = height * 0.7;
 
 interface Props {
-  data: Item[];
   scrollXAnimated: SharedValue<number>;
+  customers?: CustomerProp[] | null;
 }
 
-export const Hero: React.FC<Props> = ({data, scrollXAnimated}) => {
-  const dataLength = data.length - 1;
+export const Hero: React.FC<Props> = ({scrollXAnimated, customers}) => {
+  let dataLength = 0;
+  if (customers !== null && customers !== undefined) {
+    dataLength = customers.length;
+  }
   // The item renderer
-  const renderItem = useCallback((info: ListRenderItemInfo<Item>) => {
+  const renderItem = useCallback((info: ListRenderItemInfo<CustomerProp>) => {
     return <HeroListing index={info.index} scrollXAnimated={scrollXAnimated} {...info.item} />;
   }, []);
 
   // The key extractor
-  const keyExtractor = useCallback((_: Item, i: number) => String(i), []);
+  const keyExtractor = useCallback((_: CustomerProp, i: number) => String(i), []);
 
   // Cell renderer as a wrapper
   const cellRenderer = useCallback(({index, children, style, ...props}: any) => {
-    const newStyle: StyleProp<Animated.AnimateStyle<StyleProp<ViewStyle>>> = [...style, {zIndex: data.length - index}];
+    const newStyle: StyleProp<Animated.AnimateStyle<StyleProp<ViewStyle>>> = [...style, {zIndex: dataLength - index}];
 
     return (
       <View key={index} style={newStyle} {...props}>
@@ -72,7 +75,7 @@ export const Hero: React.FC<Props> = ({data, scrollXAnimated}) => {
               padding: SPACING * 2,
             }}
             horizontal
-            data={data}
+            data={customers}
             keyExtractor={keyExtractor}
             renderItem={renderItem}
           />
