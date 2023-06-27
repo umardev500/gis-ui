@@ -7,7 +7,7 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 export const ViewMap: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   // variables
-  const snapPoints = useMemo(() => ['15%', '25%', '65%', '99%'], []);
+  const snapPoints = useMemo(() => ['15%', '65%', '100%'], []);
   const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
@@ -20,7 +20,7 @@ export const ViewMap: React.FC = () => {
           marginTop: 10,
         }}
         ref={bottomSheetRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}>
         <BottomSheetScrollView>
