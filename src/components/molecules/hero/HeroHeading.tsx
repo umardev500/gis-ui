@@ -1,17 +1,18 @@
 import {colors} from '@constants/colors';
+import {toUpperEachWord} from '@helpers';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Animated, {SharedValue, interpolate, useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {Item} from 'src/types';
+import {CustomerProp} from 'src/types';
 
 const OVERFLOW_HEIGHT = 70;
 
 interface Props {
-  data: Item[];
+  customers?: CustomerProp[] | null;
   scrollXAnimated: SharedValue<number>;
 }
 
-export const HeroHeading: React.FC<Props> = ({data, scrollXAnimated}) => {
+export const HeroHeading: React.FC<Props> = ({customers, scrollXAnimated}) => {
   const rStyle = useAnimatedStyle(() => {
     const translateY = interpolate(scrollXAnimated.value, [-1, 0, 1], [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT]);
 
@@ -27,13 +28,15 @@ export const HeroHeading: React.FC<Props> = ({data, scrollXAnimated}) => {
   return (
     <View style={styles.overflowContainer}>
       <Animated.View style={rStyle}>
-        {data.map((item, i) => (
+        {customers?.map((item, i) => (
           <View style={styles.item} key={i}>
             <View style={styles.left}>
               <Text numberOfLines={1} style={styles.title}>
-                {item.title}
+                {item.name}
               </Text>
-              <Text numberOfLines={1}>Senayan, Jakarta</Text>
+              <Text numberOfLines={1}>
+                {toUpperEachWord(item.city.name ?? '')}, {toUpperEachWord(item.province.name ?? '')}
+              </Text>
             </View>
             <View>
               <Text style={styles.createdAt}>2 Sep, 2023</Text>

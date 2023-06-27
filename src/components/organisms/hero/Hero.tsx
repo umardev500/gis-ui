@@ -17,7 +17,7 @@ interface Props {
 export const Hero: React.FC<Props> = ({scrollXAnimated, customers}) => {
   let dataLength = 0;
   if (customers !== null && customers !== undefined) {
-    dataLength = customers.length;
+    dataLength = customers.length - 1;
   }
 
   // The item renderer
@@ -44,9 +44,9 @@ export const Hero: React.FC<Props> = ({scrollXAnimated, customers}) => {
       const status = event.nativeEvent.state;
       if (status === State.END) {
         if (scrollXAnimated.value === dataLength) {
+          console.log('ending');
           return;
         }
-        console.log('passed');
 
         scrollXAnimated.value = scrollXAnimated.value + 1;
       }
@@ -54,16 +54,19 @@ export const Hero: React.FC<Props> = ({scrollXAnimated, customers}) => {
     [dataLength],
   );
 
-  const handleFlingRight = useCallback((event: HandlerStateChangeEvent<FlingGestureHandlerEventPayload>) => {
-    const status = event.nativeEvent.state;
-    if (status === State.END) {
-      if (scrollXAnimated.value === 0) {
-        return;
-      }
+  const handleFlingRight = useCallback(
+    (event: HandlerStateChangeEvent<FlingGestureHandlerEventPayload>) => {
+      const status = event.nativeEvent.state;
+      if (status === State.END) {
+        if (scrollXAnimated.value === 0) {
+          return;
+        }
 
-      scrollXAnimated.value = scrollXAnimated.value - 1;
-    }
-  }, []);
+        scrollXAnimated.value = scrollXAnimated.value - 1;
+      }
+    },
+    [dataLength],
+  );
 
   return (
     <FlingGestureHandler key={'left'} direction={Directions.LEFT} onHandlerStateChange={handleFlingLeft}>
