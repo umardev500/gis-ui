@@ -6,10 +6,12 @@ export interface AuthRequest {
   password: string;
 }
 
+export interface AuthData {
+  token: string;
+  data: UserProp;
+}
+
 export interface AuthResponse extends APIResponse {
-  data: {
-    token: string;
-    data: UserProp;
-  } | null;
+  data: AuthData | null;
   meta: APIMeta;
 }

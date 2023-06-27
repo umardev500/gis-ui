@@ -27,6 +27,7 @@ export const LoginForm: React.FC = () => {
       if (response.status !== 404) {
         storage.set('token', response.data?.token ?? '');
 
+        authContext.setAuthData(response.data);
         authContext.setIsLogin(true);
         return;
       }
