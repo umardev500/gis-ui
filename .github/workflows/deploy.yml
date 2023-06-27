@@ -72,17 +72,6 @@ jobs:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
 
-      - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v1.0.0  # Replace with the desired release tag
-          release_name: Release 1.0.0  # Replace with the desired release name
-          body: Release notes for version 1.0.0  # Replace with the desired release notes
-          draft: false
-          prerelease: false
-
       - name: Create release and upload file
         run: |
           # Get the latest release tag
