@@ -84,4 +84,4 @@ jobs:
           prerelease: true
           title: "Development Build"
           files: |
-            android/app/build/outputs/apk/release/app-release.apk
+            package.json
