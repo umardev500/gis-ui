@@ -1,13 +1,19 @@
+import {AppContext, AppContextType} from '@context/AppContext';
 import {getBase} from '@helpers';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {ToastAndroid} from 'react-native';
 import {GetCustomersResponse} from 'src/types';
 
 export const useGetCustomers = () => {
   const [customersResponse, setCustomersResponse] = useState<GetCustomersResponse>();
   const [loading, setLoading] = useState(true);
+  const appContext = useContext(AppContext) as AppContextType;
+  const isNear = appContext.isNear;
 
-  const endpoint = getBase('/customer?order=desc&limit=1');
+  let endpoint = getBase('/customer');
+  if (isNear) {
+    endpoint = getBase('/customer/near');
+  }
 
   const handler = async (): Promise<void> => {
     try {
@@ -31,7 +37,7 @@ export const useGetCustomers = () => {
       console.log(err);
       ToastAndroid.show('Failed to get customers', ToastAndroid.SHORT);
     });
-  }, []);
+  }, [isNear]);
 
   const data = {
     customersResponse,
