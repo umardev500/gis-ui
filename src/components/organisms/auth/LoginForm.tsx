@@ -1,20 +1,18 @@
 import {Button, Input} from '@components/atoms';
+import {AuthContext, AuthContextProps} from '@context/AuthContext';
 import {useLogin} from '@hooks/api';
 import {useLocalStorage} from '@hooks/storage';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, ToastAndroid, View} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
-import {AuthRequest, RootStackParamList} from 'src/types';
-
-type StackProps = StackNavigationProp<RootStackParamList, 'MainScreen'>;
+import {AuthRequest} from 'src/types';
 
 export const LoginForm: React.FC = () => {
   const {handler, loading} = useLogin();
-  const navigation = useNavigation<StackProps>();
   const usernameValue = useSharedValue('');
   const passwordValue = useSharedValue('');
+
+  const authContext = useContext(AuthContext) as AuthContextProps;
 
   const storage = useLocalStorage();
 
@@ -29,7 +27,7 @@ export const LoginForm: React.FC = () => {
       if (response.status !== 404) {
         storage.set('token', response.data?.token ?? '');
 
-        navigation.navigate('MainScreen');
+        authContext.setIsLogin(true);
         return;
       }
 

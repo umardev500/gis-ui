@@ -16,35 +16,35 @@ const data: Item[] = [
     url: `${API_URL}/thumbs/thumb.jpg`,
     createdTime: 16082898723,
   },
-  {
-    title: 'Gelora Bung Karno',
-    url: `${API_URL}/thumbs/thumb-3.jpg`,
-    createdTime: 16082898723,
-  },
-  {
-    title: 'Gelora Bung Karno',
-    url: `${API_URL}/thumbs/thumb-4.jpg`,
-    createdTime: 16082898723,
-  },
-  {
-    title: 'Gelora Bung Karno',
-    url: `${API_URL}/thumbs/thumb-5.jpg`,
-    createdTime: 16082898723,
-  },
-  {
-    title: 'Gelora Bung Karno',
-    url: `${API_URL}/thumbs/thumb-1.jpg`,
-    createdTime: 16082898723,
-  },
-  {
-    title: 'Gelora Bung Karno',
-    url: `${API_URL}/thumbs/thumb-2.jpg`,
-    createdTime: 16082898723,
-  },
+  // {
+  //   title: 'Gelora Bung Karno',
+  //   url: `${API_URL}/thumbs/thumb-3.jpg`,
+  //   createdTime: 16082898723,
+  // },
+  // {
+  //   title: 'Gelora Bung Karno',
+  //   url: `${API_URL}/thumbs/thumb-4.jpg`,
+  //   createdTime: 16082898723,
+  // },
+  // {
+  //   title: 'Gelora Bung Karno',
+  //   url: `${API_URL}/thumbs/thumb-5.jpg`,
+  //   createdTime: 16082898723,
+  // },
+  // {
+  //   title: 'Gelora Bung Karno',
+  //   url: `${API_URL}/thumbs/thumb-1.jpg`,
+  //   createdTime: 16082898723,
+  // },
+  // {
+  //   title: 'Gelora Bung Karno',
+  //   url: `${API_URL}/thumbs/thumb-2.jpg`,
+  //   createdTime: 16082898723,
+  // },
 ];
 
 export const HomePage: React.FC = () => {
-  const scrollXAnimated = useSharedValue(1);
+  const scrollXAnimated = useSharedValue(0);
   const {customersResponse: customersNearResponse} = useGetCustomersNearest();
   const {customersResponse} = useGetCustomers();
   const hasCustomerData = (customersResponse?.meta.total ?? 0) > 0;
@@ -53,7 +53,7 @@ export const HomePage: React.FC = () => {
     <ScrollView style={styles.scrollView}>
       <View style={styles.container}>
         <HeroHeading scrollXAnimated={scrollXAnimated} data={data} />
-        <Hero customers={customersNearResponse?.data} scrollXAnimated={scrollXAnimated} />
+        <Hero scrollXAnimated={scrollXAnimated} customers={customersNearResponse?.data} />
         <View style={styles.heading}>
           <Text style={styles.title}>Update Terbaru</Text>
           <ArrowRightIcon />
