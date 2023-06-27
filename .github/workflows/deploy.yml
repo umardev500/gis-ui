@@ -72,34 +72,16 @@ jobs:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
 
-      - name: Create release and upload file
+      - name: Listing
         run: |
-          # Get the latest release tag
-          RELEASE_TAG=$(git describe --abbrev=0 --tags)
+          ls android/app/build/outputs/apk
+          ls android/app/build/outputs/apk/release
 
-          # Create the release
-          RESPONSE=$(curl \
-            --request POST \
-            --url https://api.github.com/repos/${{ github.repository }}/releases \
-            --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            --header 'Content-Type: application/json' \
-            --data '{
-              "tag_name": "${RELEASE_TAG}",
-              "name": "Release ${RELEASE_TAG}",
-              "draft": false,
-              "prerelease": false
-            }')
-
-          # Extract the release ID from the response
-          RELEASE_ID=$(echo "${RESPONSE}" | jq -r '.id')
-
-          # Upload the file
-          UPLOAD_RESPONSE=$(curl \
-            --request POST \
-            --url "https://uploads.github.com/repos/${{ github.repository }}/releases/${RELEASE_ID}/assets?name=myfile.txt" \
-            --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            --header 'Content-Type: text/plain' \
-            --data-binary "@android/app/build/outputs/apk/release/app-release.apk")
-
-          # Display the upload response
-          echo "${UPLOAD_RESPONSE}"
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            android/app/build/outputs/apk/release/app-release.apk
