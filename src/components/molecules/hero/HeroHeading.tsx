@@ -1,5 +1,5 @@
 import {colors} from '@constants/colors';
-import {toUpperEachWord} from '@helpers';
+import {toLocalTime, toUpperEachWord} from '@helpers';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Animated, {SharedValue, interpolate, useAnimatedStyle, withTiming} from 'react-native-reanimated';
@@ -39,7 +39,7 @@ export const HeroHeading: React.FC<Props> = ({customers, scrollXAnimated}) => {
               </Text>
             </View>
             <View>
-              <Text style={styles.createdAt}>2 Sep, 2023</Text>
+              <Text style={styles.createdAt}>{toLocalTime(item.createdAt)}</Text>
             </View>
           </View>
         ))}
