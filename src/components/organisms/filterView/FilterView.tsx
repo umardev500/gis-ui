@@ -1,10 +1,13 @@
 import {colors} from '@constants/colors';
+import {AppContext, AppContextType} from '@context/AppContext';
 import BottomSheet, {BottomSheetBackdrop, BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import React, {useMemo} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, {useContext, useMemo} from 'react';
+import {StyleSheet, Switch, Text, View} from 'react-native';
 
 export const FilterView = React.forwardRef<BottomSheet, {}>((_, ref) => {
   const snapPoints = useMemo(() => ['1%', '100%'], []);
+  const appContext = useContext(AppContext) as AppContextType;
+  const isNear = appContext.isNear;
 
   return (
     <BottomSheet
@@ -22,8 +25,13 @@ export const FilterView = React.forwardRef<BottomSheet, {}>((_, ref) => {
             style={{
               flex: 1,
             }}>
-            <Text style={styles.name}>Si Jalak Harupat 🎉</Text>
-            <Text style={styles.desc}>Lorem ipsum dolor is amet..</Text>
+            <Text style={styles.name}>Filter result 🎉</Text>
+            <View style={styles.itemContainer}>
+              <View style={styles.item}>
+                <Text style={styles.label}>Tampilkan Lokasi Terdekat</Text>
+                <Switch onChange={() => appContext.setIsNear(prev => !prev)} value={isNear} />
+              </View>
+            </View>
           </View>
         </View>
       </BottomSheetScrollView>
@@ -43,8 +51,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.gray[600],
   },
-  desc: {
-    marginTop: 20,
+  label: {
     color: colors.gray[500],
+  },
+  itemContainer: {
+    marginTop: 24,
+  },
+  item: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

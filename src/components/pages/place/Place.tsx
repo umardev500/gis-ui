@@ -11,7 +11,6 @@ export const Place: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const {customersResponse, loading} = useGetCustomers();
   const handleFilterClick = () => {
-    console.log('filter click');
     bottomSheetRef.current?.snapToIndex(1);
   };
 
