@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - uses: "marvinpinto/action-automatic-releases@latest"
+        permissions: read-all|write-all
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
