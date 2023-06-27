@@ -1,21 +1,36 @@
 import {Loading} from '@components/atoms';
 import {CardList} from '@components/organisms';
+import {FilterView} from '@components/organisms/filterView/FilterView';
 import {colors} from '@constants/colors';
+import BottomSheet from '@gorhom/bottom-sheet';
 import {useGetCustomers} from '@hooks/api';
-import React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useRef} from 'react';
+import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export const Place: React.FC = () => {
+  const bottomSheetRef = useRef<BottomSheet>(null);
   const {customersResponse, loading} = useGetCustomers();
+  const handleFilterClick = () => {
+    console.log('filter click');
+    bottomSheetRef.current?.snapToIndex(1);
+  };
 
   return (
-    <ScrollView style={styles.scrollView}>
-      {loading ? <Loading animating /> : null}
-      <View style={styles.container}>
-        <Text style={styles.title}>Lokasi Customer</Text>
-        <CardList customers={customersResponse?.data} />
-      </View>
-    </ScrollView>
+    <>
+      <ScrollView style={styles.scrollView}>
+        {loading ? <Loading animating /> : null}
+        <View style={styles.container}>
+          <View style={styles.heading}>
+            <Text style={styles.title}>Lokasi Customer</Text>
+            <TouchableOpacity onPress={handleFilterClick}>
+              <Text style={styles.filter}>Filter</Text>
+            </TouchableOpacity>
+          </View>
+          <CardList customers={customersResponse?.data} />
+        </View>
+      </ScrollView>
+      <FilterView ref={bottomSheetRef} />
+    </>
   );
 };
 
@@ -28,6 +43,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  heading: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   title: {
     fontSize: 18,
     fontWeight: '600',
@@ -35,5 +55,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginBottom: 24,
     marginTop: 24,
+  },
+  filter: {
+    paddingRight: 24,
+    color: colors.gray[400],
   },
 });
