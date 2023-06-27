@@ -12,6 +12,21 @@ jobs:
     name: Android Build
     runs-on: ubuntu-latest # using ubuntu latest version / or you can use a specific version
 
+    permissions:
+      actions: read|write|none
+      checks: read|write|none
+      contents: read|write|none
+      deployments: read|write|none
+      id-token: read|write|none
+      issues: read|write|none
+      discussions: read|write|none
+      packages: read|write|none
+      pages: read|write|none
+      pull-requests: read|write|none
+      repository-projects: read|write|none
+      security-events: read|write|none
+      statuses: read|write|none
+
     steps:
       - name: Check out Git repository # clone the repo to local ci workspace
         uses: actions/checkout@v2
@@ -38,10 +53,14 @@ jobs:
       - name: Make Gradlew Executable
         run: cd android && chmod +x ./gradlew
 
-      - name: Generate App APK
+      - name: Clean up
         run: |
           cd android
           ./gradlew clean
+      
+      - name: Generate App APK
+        run: |
+          cd android
           ./gradlew assembleRelease
 
       - name: Upload Artifact
@@ -53,8 +72,8 @@ jobs:
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "Production Build"
+          automatic_release_tag: "Production"
           prerelease: true
-          title: "Production Build"
+          title: "Development Build"
           files: |
             android/app/build/outputs/apk/release/app-release.apk
