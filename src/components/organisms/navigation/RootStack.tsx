@@ -1,4 +1,4 @@
-import {AddLocation, Login, Origin, PinPoint} from '@components/pages';
+import {AddLocation, Login, Origin, PinPoint, ViewMap} from '@components/pages';
 import {AuthContext, AuthContextProps} from '@context/AuthContext';
 import {OriginProvider} from '@context/OriginContext';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -52,6 +52,13 @@ export const RootStack: React.FC = () => {
                 title: 'Pin Point',
               }}
               component={PinPoint}
+            />
+            <Stack.Screen
+              name="ViewMapScreen"
+              options={{
+                title: 'Detail Lokasi',
+              }}
+              component={ViewMap}
             />
           </>
         )}
