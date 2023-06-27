@@ -19,6 +19,7 @@ export const Hero: React.FC<Props> = ({scrollXAnimated, customers}) => {
   if (customers !== null && customers !== undefined) {
     dataLength = customers.length;
   }
+
   // The item renderer
   const renderItem = useCallback((info: ListRenderItemInfo<CustomerProp>) => {
     return <HeroListing index={info.index} scrollXAnimated={scrollXAnimated} {...info.item} />;
@@ -38,16 +39,20 @@ export const Hero: React.FC<Props> = ({scrollXAnimated, customers}) => {
     );
   }, []);
 
-  const handleFlingLeft = useCallback((event: HandlerStateChangeEvent<FlingGestureHandlerEventPayload>) => {
-    const status = event.nativeEvent.state;
-    if (status === State.END) {
-      if (scrollXAnimated.value === dataLength) {
-        return;
-      }
+  const handleFlingLeft = useCallback(
+    (event: HandlerStateChangeEvent<FlingGestureHandlerEventPayload>) => {
+      const status = event.nativeEvent.state;
+      if (status === State.END) {
+        if (scrollXAnimated.value === dataLength) {
+          return;
+        }
+        console.log('passed');
 
-      scrollXAnimated.value = scrollXAnimated.value + 1;
-    }
-  }, []);
+        scrollXAnimated.value = scrollXAnimated.value + 1;
+      }
+    },
+    [dataLength],
+  );
 
   const handleFlingRight = useCallback((event: HandlerStateChangeEvent<FlingGestureHandlerEventPayload>) => {
     const status = event.nativeEvent.state;
