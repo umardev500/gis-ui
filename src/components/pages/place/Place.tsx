@@ -2,14 +2,19 @@ import {Loading} from '@components/atoms';
 import {CardList} from '@components/organisms';
 import {FilterView} from '@components/organisms/filterView/FilterView';
 import {colors} from '@constants/colors';
+import {AppContext, AppContextType} from '@context/AppContext';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {useGetCustomers} from '@hooks/api';
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export const Place: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const {customersResponse, loading} = useGetCustomers();
+
+  const appContext = useContext(AppContext) as AppContextType;
+  const isNear = appContext.isNear;
+  const {customersResponse, loading} = useGetCustomers(isNear);
+
   const handleFilterClick = () => {
     bottomSheetRef.current?.snapToIndex(1);
   };

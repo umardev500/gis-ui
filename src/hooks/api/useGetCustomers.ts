@@ -1,14 +1,11 @@
-import {AppContext, AppContextType} from '@context/AppContext';
 import {getBase} from '@helpers';
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {ToastAndroid} from 'react-native';
 import {GetCustomersResponse} from 'src/types';
 
-export const useGetCustomers = () => {
+export const useGetCustomers = (isNear = false) => {
   const [customersResponse, setCustomersResponse] = useState<GetCustomersResponse>();
   const [loading, setLoading] = useState(true);
-  const appContext = useContext(AppContext) as AppContextType;
-  const isNear = appContext.isNear;
 
   let endpoint = getBase('/customer');
   if (isNear) {
