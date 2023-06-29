@@ -1,15 +1,26 @@
+import {Button} from '@components/atoms';
 import {LoginForm} from '@components/organisms';
 import {colors} from '@constants/colors';
-import React from 'react';
+import {AuthContext, AuthContextProps} from '@context/AuthContext';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 export const Login: React.FC = () => {
+  const authContext = useContext(AuthContext) as AuthContextProps;
+
+  const handleGuest = () => {
+    authContext.setIsGuest(true);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
         <Text style={styles.title}>Login</Text>
         <Text style={styles.subTitle}>Authentication required</Text>
         <LoginForm />
+        <View style={styles.quest}>
+          <Button onPress={handleGuest} text="Pengunjung" color={colors.gray[50]} colorText={colors.gray[500]} />
+        </View>
       </View>
     </View>
   );
@@ -35,4 +46,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   card: {},
+  quest: {
+    marginTop: 8,
+  },
 });

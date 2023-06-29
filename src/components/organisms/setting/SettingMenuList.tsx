@@ -1,16 +1,19 @@
 import {SettingMenuListing} from '@components/molecules';
+import {AuthContext, AuthContextProps} from '@context/AuthContext';
 import {useLogout} from '@hooks/index';
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {FlatList, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 import {SettingMenu} from 'src/types';
 
 export const SettingMenuList: React.FC = () => {
   const logout = useLogout();
+  const authContext = useContext(AuthContext) as AuthContextProps;
+  const isGuest = authContext.isGuest;
 
   const menus: SettingMenu[] = [
     {
       title: 'Tambah Data',
-      level: 'all',
+      level: 'admin',
       screen: 'AddLocationScreen',
     },
     {
@@ -21,6 +24,14 @@ export const SettingMenuList: React.FC = () => {
     },
   ];
 
+  const filteredMenu = menus.filter(val => {
+    if (val.level === 'admin' && isGuest) {
+      return null;
+    }
+
+    return val;
+  });
+
   const renderItem = useCallback((info: ListRenderItemInfo<SettingMenu>) => {
     return <SettingMenuListing {...info.item} />;
   }, []);
@@ -28,7 +39,7 @@ export const SettingMenuList: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
-        <FlatList data={menus} renderItem={renderItem} />
+        <FlatList data={filteredMenu} renderItem={renderItem} />
       </View>
     </View>
   );

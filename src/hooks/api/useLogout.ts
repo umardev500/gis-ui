@@ -10,6 +10,7 @@ export const useLogout = () => {
   const handler = () => {
     storage.delete(storageCons.token);
     authContext.setIsLogin(false);
+    authContext.setIsGuest(false);
   };
 
   return handler;
