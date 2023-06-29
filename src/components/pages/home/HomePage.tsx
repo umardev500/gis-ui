@@ -3,9 +3,8 @@ import {HeroHeading} from '@components/molecules';
 import {CardList, Hero} from '@components/organisms';
 import {colors} from '@constants/colors';
 import {useGetCustomers} from '@hooks/api';
-import {useGetCustomersNearest} from '@hooks/index';
-import React, {useEffect, useState} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 
 // const data: Item[] = [
@@ -42,23 +41,25 @@ import {useSharedValue} from 'react-native-reanimated';
 // ];
 
 export const HomePage: React.FC = () => {
-  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const scrollXAnimated = useSharedValue(0);
-  const {customersResponse: customersNearResponse} = useGetCustomersNearest();
-  const {customersResponse} = useGetCustomers();
+  const {customersResponse: customersNearResponse} = useGetCustomers(true, refreshing);
+  const {customersResponse, loading: getCustomerLoading} = useGetCustomers(false, refreshing);
   const hasCustomerData = (customersResponse?.meta.total ?? 0) > 0;
 
   useEffect(() => {
-    if (hasCustomerData) {
-      setLoading(false);
-    }
-  }, [hasCustomerData]);
+    setRefreshing(false);
+  }, [getCustomerLoading]);
+
+  const handleRefresh = useCallback(() => {
+    setRefreshing(true);
+  }, []);
 
   return (
     <>
-      {loading ? <Loading animating /> : null}
+      {getCustomerLoading ? <Loading animating /> : null}
 
-      <ScrollView style={styles.scrollView}>
+      <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />} style={styles.scrollView}>
         <View style={styles.container}>
           <HeroHeading scrollXAnimated={scrollXAnimated} customers={customersNearResponse?.data} />
           <Hero scrollXAnimated={scrollXAnimated} customers={customersNearResponse?.data} />

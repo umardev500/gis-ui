@@ -3,9 +3,9 @@ import {useEffect, useState} from 'react';
 import {ToastAndroid} from 'react-native';
 import {GetCustomersResponse} from 'src/types';
 
-export const useGetCustomers = (isNear = false) => {
+export const useGetCustomers = (isNear = false, refreshing: boolean) => {
   const [customersResponse, setCustomersResponse] = useState<GetCustomersResponse>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   let endpoint = getBase('/customer');
   if (isNear) {
@@ -13,6 +13,7 @@ export const useGetCustomers = (isNear = false) => {
   }
 
   const handler = async (): Promise<void> => {
+    setLoading(true);
     try {
       const response = await fetch(endpoint);
       const jsonData: GetCustomersResponse = await response.json();
@@ -34,7 +35,7 @@ export const useGetCustomers = (isNear = false) => {
       console.log(err);
       ToastAndroid.show('Failed to get customers', ToastAndroid.SHORT);
     });
-  }, [isNear]);
+  }, [isNear, refreshing]);
 
   const data = {
     customersResponse,
