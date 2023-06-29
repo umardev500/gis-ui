@@ -1,9 +1,9 @@
 import {colors} from '@constants/colors';
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleProp, StyleSheet, TextInput, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
-interface Props {
+interface Props extends TextInputProps {
   placeholder?: string;
   containerStyles?: StyleProp<ViewStyle>[];
   editable?: boolean;
@@ -11,7 +11,7 @@ interface Props {
   inputValue?: SharedValue<string>;
 }
 
-export const Input = React.forwardRef<TextInput, Props>(({placeholder, containerStyles, editable = true, rightIcon, inputValue}, ref) => {
+export const Input = React.forwardRef<TextInput, Props>(({placeholder, containerStyles, editable = true, rightIcon, inputValue, ...props}, ref) => {
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState('');
 
@@ -45,6 +45,7 @@ export const Input = React.forwardRef<TextInput, Props>(({placeholder, container
         placeholderTextColor={colors.gray[400]}
         placeholder={placeholder}
         value={value}
+        {...props}
       />
 
       {rightIcon}

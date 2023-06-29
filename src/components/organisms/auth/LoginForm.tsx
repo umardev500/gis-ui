@@ -42,8 +42,8 @@ export const LoginForm: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.itemContainer}>
-        <Input inputValue={usernameValue} placeholder="Username" />
-        <Input inputValue={passwordValue} placeholder="Password" />
+        <Input autoCapitalize="none" inputValue={usernameValue} placeholder="Username" />
+        <Input secureTextEntry inputValue={passwordValue} placeholder="Password" />
       </View>
       <View style={styles.btnContainer}>
         <Button loading={loading} onPress={handleSubmit} />
