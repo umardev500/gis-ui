@@ -21,8 +21,8 @@ export const Place: React.FC = () => {
 
   return (
     <>
+      {loading ? <Loading animating /> : null}
       <ScrollView style={styles.scrollView}>
-        {loading ? <Loading animating /> : null}
         <View style={styles.container}>
           <View style={styles.heading}>
             <Text style={styles.title}>Lokasi Customer</Text>
