@@ -18,12 +18,11 @@ interface Props {
 
 export const AuthProvider: React.FC<Props> = ({children}) => {
   const storage = useLocalStorage();
-  const guest = storage.getString('guest');
-  const guestState = guest !== undefined;
+  const guest = storage.getBoolean('guest') ?? false;
   const token = storage.getString('token');
   const tokenState = token !== undefined;
 
-  const [isGuest, setIsGuest] = useState(guestState);
+  const [isGuest, setIsGuest] = useState(guest);
   const [isLogin, setIsLogin] = useState(tokenState);
   const [authData, setAuthData] = useState<AuthData | null>(null);
 

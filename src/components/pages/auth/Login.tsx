@@ -2,13 +2,17 @@ import {Button} from '@components/atoms';
 import {LoginForm} from '@components/organisms';
 import {colors} from '@constants/colors';
 import {AuthContext, AuthContextProps} from '@context/AuthContext';
+import {useLocalStorage} from '@hooks/storage';
 import React, {useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 export const Login: React.FC = () => {
   const authContext = useContext(AuthContext) as AuthContextProps;
 
+  const storage = useLocalStorage();
+
   const handleGuest = () => {
+    storage.set('guest', true);
     authContext.setIsGuest(true);
   };
 
