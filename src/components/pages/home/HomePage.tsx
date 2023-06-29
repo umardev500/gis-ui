@@ -1,10 +1,10 @@
-import {ArrowRightIcon, Message} from '@components/atoms';
+import {ArrowRightIcon, Loading, Message} from '@components/atoms';
 import {HeroHeading} from '@components/molecules';
 import {CardList, Hero} from '@components/organisms';
 import {colors} from '@constants/colors';
 import {useGetCustomers} from '@hooks/api';
 import {useGetCustomersNearest} from '@hooks/index';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useSharedValue} from 'react-native-reanimated';
 
@@ -42,28 +42,39 @@ import {useSharedValue} from 'react-native-reanimated';
 // ];
 
 export const HomePage: React.FC = () => {
+  const [loading, setLoading] = useState(true);
   const scrollXAnimated = useSharedValue(0);
   const {customersResponse: customersNearResponse} = useGetCustomersNearest();
   const {customersResponse} = useGetCustomers();
   const hasCustomerData = (customersResponse?.meta.total ?? 0) > 0;
 
+  useEffect(() => {
+    if (hasCustomerData) {
+      setLoading(false);
+    }
+  }, [hasCustomerData]);
+
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.container}>
-        <HeroHeading scrollXAnimated={scrollXAnimated} customers={customersNearResponse?.data} />
-        <Hero scrollXAnimated={scrollXAnimated} customers={customersNearResponse?.data} />
-        <View style={styles.heading}>
-          <Text style={styles.title}>Update Terbaru</Text>
-          <ArrowRightIcon />
-        </View>
-        <CardList customers={customersResponse?.data} />
-        {!hasCustomerData ? (
-          <View style={styles.messageContainer}>
-            <Message text="No data found." />
+    <>
+      {loading ? <Loading animating /> : null}
+
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.container}>
+          <HeroHeading scrollXAnimated={scrollXAnimated} customers={customersNearResponse?.data} />
+          <Hero scrollXAnimated={scrollXAnimated} customers={customersNearResponse?.data} />
+          <View style={styles.heading}>
+            <Text style={styles.title}>Update Terbaru</Text>
+            <ArrowRightIcon />
           </View>
-        ) : null}
-      </View>
-    </ScrollView>
+          <CardList customers={customersResponse?.data} />
+          {!hasCustomerData ? (
+            <View style={styles.messageContainer}>
+              <Message text="No data found." />
+            </View>
+          ) : null}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
