@@ -8,6 +8,7 @@ import React, {useContext} from 'react';
 import {RootStackParamList} from 'src/types';
 import {BottomTab} from './BottomTab';
 import {PermissionsAndroid} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -15,6 +16,17 @@ export const RootStack: React.FC = () => {
   const authContext = useContext(AuthContext) as AuthContextProps;
   const authenticated = authContext.isLogin || authContext.isGuest;
   usePermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, 'Location permission', 'Please enable location');
+
+  Geolocation.getCurrentPosition(
+    position => {
+      console.log('init location:', position);
+    },
+    error => {
+      // See error code charts below.
+      console.log(error.code, error.message);
+    },
+    {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  );
 
   return (
     <AppProvider>
