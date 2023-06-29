@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   label: {
     marginVertical: 8,
     fontSize: 12,
+    color: colors.gray[400],
   },
   itemContainer: {
     borderRadius: 8,
