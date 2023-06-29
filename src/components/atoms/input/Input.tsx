@@ -1,6 +1,6 @@
 import {colors} from '@constants/colors';
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle} from 'react-native';
+import {StyleProp, StyleSheet, TextInput, TextInputProps, TextStyle, View, ViewStyle} from 'react-native';
 import {SharedValue} from 'react-native-reanimated';
 
 interface Props extends TextInputProps {
@@ -9,9 +9,10 @@ interface Props extends TextInputProps {
   editable?: boolean;
   rightIcon?: React.ReactElement;
   inputValue?: SharedValue<string>;
+  inputStyle?: StyleProp<TextStyle>;
 }
 
-export const Input = React.forwardRef<TextInput, Props>(({placeholder, containerStyles, editable = true, rightIcon, inputValue, ...props}, ref) => {
+export const Input = React.forwardRef<TextInput, Props>(({placeholder, containerStyles, editable = true, rightIcon, inputValue, inputStyle, ...props}, ref) => {
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState('');
 
@@ -34,14 +35,14 @@ export const Input = React.forwardRef<TextInput, Props>(({placeholder, container
   }, [value]);
 
   return (
-    <View style={[containerStyles, styles.container, isFocused ? styles.containerFocused : styles.containerUnFocused]}>
+    <View style={[styles.container, isFocused ? styles.containerFocused : styles.containerUnFocused, containerStyles]}>
       <TextInput
         ref={ref}
         onChangeText={handleChange}
         editable={editable}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        style={[styles.input]}
+        style={[styles.input, inputStyle]}
         placeholderTextColor={colors.gray[400]}
         placeholder={placeholder}
         value={value}

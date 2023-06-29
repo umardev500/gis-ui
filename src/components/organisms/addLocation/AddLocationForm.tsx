@@ -28,9 +28,11 @@ export const AddLocationForm: React.FC = () => {
   // inputs value
   const nameValue = useSharedValue('');
   const phoneValue = useSharedValue('');
+  const descValue = useSharedValue('');
   // inputs ref
   const nameRef = useRef<TextInput>(null);
   const phoneRef = useRef<TextInput>(null);
+  const descRef = useRef<TextInput>(null);
 
   // current map location
   const currentCoords = useSharedValue<Coords>({
@@ -56,6 +58,7 @@ export const AddLocationForm: React.FC = () => {
   const resetForm = () => {
     nameRef.current?.clear();
     phoneRef.current?.clear();
+    descRef.current?.clear();
     originContext.setCoords(undefined);
     originContext.setOrigin(undefined);
     setUploadData(undefined);
@@ -64,7 +67,7 @@ export const AddLocationForm: React.FC = () => {
   const handleSubmit = () => {
     const origin = originContext.origin;
     const coords = originContext.coords ?? currentCoords.value;
-    const isFilledAll = nameValue.value !== '' && phoneValue.value !== '' && origin !== undefined && coords !== undefined && uploadData !== undefined;
+    const isFilledAll = nameValue.value !== '' && phoneValue.value !== '' && descValue.value !== '' && origin !== undefined && coords !== undefined && uploadData !== undefined;
 
     if (!isFilledAll) {
       ToastAndroid.show('Isi semua data', ToastAndroid.SHORT);
@@ -97,7 +100,7 @@ export const AddLocationForm: React.FC = () => {
       },
       picture: uploadData.url,
       thumbnail: uploadData.thumbUrl,
-      description: 'desc',
+      description: descValue.value,
       createdAt: 16000,
     };
     postHandler(payload)
@@ -163,6 +166,10 @@ export const AddLocationForm: React.FC = () => {
         <Text style={styles.label}>Alamat</Text>
         <AddressBtn />
       </View>
+      <View style={styles.item}>
+        <Text style={styles.label}>Deskripsi</Text>
+        <Input containerStyles={[styles.descContainer]} inputStyle={styles.descInput} multiline ref={descRef} inputValue={descValue} placeholder="Description" />
+      </View>
       <TouchableWithoutFeedback
         onPress={() => {
           navigation.navigate('PinPoint');
@@ -208,4 +215,9 @@ const styles = StyleSheet.create({
   pickerBtn: {
     marginTop: 40,
   },
+  descContainer: {
+    alignItems: 'flex-start',
+    height: 100,
+  },
+  descInput: {},
 });
