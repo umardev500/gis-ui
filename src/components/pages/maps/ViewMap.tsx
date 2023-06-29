@@ -1,14 +1,19 @@
+import {Button} from '@components/atoms';
 import {MapView} from '@components/organisms';
 import {colors} from '@constants/colors';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useLinking} from '@hooks/linking';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import React, {useMemo, useRef} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 import {RootStackParamList} from 'src/types';
 
 type ViewMapRouteProps = RouteProp<RootStackParamList, 'ViewMapScreen'>;
 
 export const ViewMap: React.FC = () => {
+  const [coords, setCoords] = useState([0, 0]);
+
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   // route
@@ -17,6 +22,24 @@ export const ViewMap: React.FC = () => {
 
   // variables
   const snapPoints = useMemo(() => ['15%', '65%', '100%'], []);
+  const linkingHandler = useLinking();
+
+  const handleLinking = () => {
+    linkingHandler(`https://www.google.com/maps/dir/?api=1&origin=${coords[0]},${coords[1]}&destination=${params.location.coordinates[1]},${params.location.coordinates[0]}`);
+  };
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setCoords([position.coords.latitude, position.coords.longitude]);
+      },
+      error => {
+        // See error code charts below.
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -37,6 +60,9 @@ export const ViewMap: React.FC = () => {
               <Image resizeMode="contain" style={styles.thumb} source={{uri: params.picture}} />
               <Text style={styles.name}>{params.name} 🎉</Text>
               <Text style={styles.desc}>{params.description}</Text>
+              <View style={styles.directionBtn}>
+                <Button onPress={handleLinking} text="Open Direction" color={colors.gray[50]} colorText={colors.gray[600]} />
+              </View>
             </View>
           </View>
         </BottomSheetScrollView>
@@ -74,5 +100,8 @@ const styles = StyleSheet.create({
   desc: {
     marginTop: 20,
     color: colors.gray[500],
+  },
+  directionBtn: {
+    marginTop: 24,
   },
 });

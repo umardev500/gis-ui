@@ -32,6 +32,7 @@ export const MapPinPoint = React.memo(({onSelected, onUpdated}: Props) => {
     }
 
     if (!hasDragged) {
+      console.log('loc:', newLocation.coords);
       setSelectedCoords([newLocation.coords.longitude, newLocation.coords.latitude]);
       pinPointRef.current?.refresh();
     }
