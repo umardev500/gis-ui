@@ -17,7 +17,7 @@ interface Props {
   customers: CustomerProp[];
 }
 
-type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
+type StackProps = StackNavigationProp<RootStackParamList, 'ViewMapScreen'>;
 
 export const HeroListing: React.FC<Props> = ({index, scrollXAnimated, customer, customers}) => {
   const {picture} = customer;
