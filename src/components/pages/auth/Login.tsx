@@ -1,6 +1,7 @@
 import {Button} from '@components/atoms';
 import {LoginForm} from '@components/organisms';
 import {colors} from '@constants/colors';
+import {storageCons} from '@constants/storage';
 import {AuthContext, AuthContextProps} from '@context/AuthContext';
 import {useLocalStorage} from '@hooks/storage';
 import React, {useContext} from 'react';
@@ -12,7 +13,7 @@ export const Login: React.FC = () => {
   const storage = useLocalStorage();
 
   const handleGuest = () => {
-    storage.set('guest', true);
+    storage.set(storageCons.guest, true);
     authContext.setIsGuest(true);
   };
 

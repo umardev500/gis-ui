@@ -1,4 +1,5 @@
 import {Button, Input} from '@components/atoms';
+import {storageCons} from '@constants/storage';
 import {AuthContext, AuthContextProps} from '@context/AuthContext';
 import {useLogin} from '@hooks/api';
 import {useLocalStorage} from '@hooks/storage';
@@ -25,7 +26,7 @@ export const LoginForm: React.FC = () => {
     try {
       const response = await handler(payload);
       if (response.status !== 404) {
-        storage.set('token', response.data?.token ?? '');
+        storage.set(storageCons.token, response.data?.token ?? '');
 
         authContext.setAuthData(response.data);
         authContext.setIsLogin(true);

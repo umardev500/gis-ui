@@ -12,6 +12,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export const RootStack: React.FC = () => {
   const authContext = useContext(AuthContext) as AuthContextProps;
   const authenticated = authContext.isLogin || authContext.isGuest;
+  console.log(authContext.isGuest, authContext.isLogin);
 
   return (
     <AppProvider>
