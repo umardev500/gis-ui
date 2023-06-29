@@ -20,7 +20,7 @@ export const ViewMap: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <MapView />
+      <MapView coords={params.location.coordinates} />
       <BottomSheet
         handleStyle={{
           marginTop: 10,
