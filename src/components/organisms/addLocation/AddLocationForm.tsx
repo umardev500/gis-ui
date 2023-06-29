@@ -108,8 +108,8 @@ export const AddLocationForm: React.FC = () => {
         ToastAndroid.show(res.message, ToastAndroid.SHORT);
         resetForm();
       })
-      .catch(() => {
-        ToastAndroid.show('failed to upload data', ToastAndroid.SHORT);
+      .catch((err: Error) => {
+        ToastAndroid.show(err.message, ToastAndroid.SHORT);
       })
       .finally(() => {
         setIsSubmitting(false);
