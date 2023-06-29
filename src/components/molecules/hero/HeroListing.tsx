@@ -1,7 +1,9 @@
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import {Dimensions, Image, StyleSheet, TouchableWithoutFeedback} from 'react-native';
 import Animated, {SharedValue, interpolate, useAnimatedStyle, withTiming} from 'react-native-reanimated';
-import {CustomerProp} from 'src/types';
+import {CustomerProp, RootStackParamList} from 'src/types';
 
 const {width, height} = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.8;
@@ -12,11 +14,16 @@ interface Props {
   index: number;
   scrollXAnimated: SharedValue<number>;
   customer: CustomerProp;
+  customers: CustomerProp[];
 }
 
-export const HeroListing: React.FC<Props> = ({index, scrollXAnimated, customer}) => {
+type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
+
+export const HeroListing: React.FC<Props> = ({index, scrollXAnimated, customer, customers}) => {
   const {picture} = customer;
   const inputRange = [index - 1, index, index + 1];
+
+  const navigation = useNavigation<StackProps>();
 
   const animatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(scrollXAnimated.value, inputRange, [0.8, 1, 1.3]);
@@ -31,7 +38,7 @@ export const HeroListing: React.FC<Props> = ({index, scrollXAnimated, customer})
 
   // click handler
   const handleClick = () => {
-    console.log('card clicked on:', scrollXAnimated.value);
+    navigation.navigate('ViewMapScreen', customers[scrollXAnimated.value]);
   };
 
   return (
