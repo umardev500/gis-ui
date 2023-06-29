@@ -12,18 +12,20 @@ const GAP = 16;
 const ITEM_WIDTH = width / 2 - SPACING - GAP / 2;
 const ITEM_HEIGHT = 250;
 
-interface Props extends CustomerProp {
+interface Props {
   index: number;
+  customer: CustomerProp;
 }
 
 type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 
-export const CardListing: React.FC<Props> = ({index, name, province, city, thumbnail}) => {
+export const CardListing: React.FC<Props> = ({index, customer}) => {
+  const {name, province, city, thumbnail} = customer;
   const even = index % 2 !== 0;
   const navigation = useNavigation<StackProps>();
 
   const handlePress = useCallback(() => {
-    navigation.navigate('ViewMapScreen');
+    navigation.navigate('ViewMapScreen', customer);
   }, []);
 
   return (

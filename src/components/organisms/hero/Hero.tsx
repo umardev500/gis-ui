@@ -22,7 +22,7 @@ export const Hero: React.FC<Props> = ({scrollXAnimated, customers}) => {
 
   // The item renderer
   const renderItem = useCallback((info: ListRenderItemInfo<CustomerProp>) => {
-    return <HeroListing index={info.index} scrollXAnimated={scrollXAnimated} {...info.item} />;
+    return <HeroListing index={info.index} scrollXAnimated={scrollXAnimated} customer={info.item} />;
   }, []);
 
   // The key extractor

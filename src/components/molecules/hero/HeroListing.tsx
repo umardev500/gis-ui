@@ -8,12 +8,14 @@ const ITEM_WIDTH = width * 0.8;
 const ITEM_HEIGHT = height * 0.6;
 const MAX_ITEM = 3;
 
-interface Props extends CustomerProp {
+interface Props {
   index: number;
   scrollXAnimated: SharedValue<number>;
+  customer: CustomerProp;
 }
 
-export const HeroListing: React.FC<Props> = ({picture, index, scrollXAnimated}) => {
+export const HeroListing: React.FC<Props> = ({index, scrollXAnimated, customer}) => {
+  const {picture} = customer;
   const inputRange = [index - 1, index, index + 1];
 
   const animatedStyle = useAnimatedStyle(() => {

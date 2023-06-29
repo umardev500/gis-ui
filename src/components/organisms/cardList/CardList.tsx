@@ -12,7 +12,7 @@ export const CardList: React.FC<Props> = ({customers}) => {
     <View style={styles.container}>
       <View style={styles.list}>
         {customers?.map((item, i) => (
-          <CardListing {...item} key={i} index={i} />
+          <CardListing customer={item} key={i} index={i} />
         ))}
       </View>
     </View>
