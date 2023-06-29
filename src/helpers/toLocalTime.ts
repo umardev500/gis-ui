@@ -1,6 +1,6 @@
 export const toLocalTime = (unixEpoch: number) => {
   // Create a new Date object from the UTC timestamp
-  const date = new Date(unixEpoch);
+  const date = new Date(unixEpoch * 1000);
 
   // Convert to local time string
   const formattedDate = date.toLocaleDateString('en-US', {
