@@ -1,18 +1,20 @@
 import {AddLocation, Login, Origin, PinPoint, ViewMap} from '@components/pages';
+import {AppProvider} from '@context/AppContext';
 import {AuthContext, AuthContextProps} from '@context/AuthContext';
 import {OriginProvider} from '@context/OriginContext';
+import {usePermission} from '@hooks/permission';
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {useContext} from 'react';
 import {RootStackParamList} from 'src/types';
 import {BottomTab} from './BottomTab';
-import {AppProvider} from '@context/AppContext';
+import {PermissionsAndroid} from 'react-native';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => {
   const authContext = useContext(AuthContext) as AuthContextProps;
   const authenticated = authContext.isLogin || authContext.isGuest;
-  console.log(authContext.isGuest, authContext.isLogin);
+  usePermission(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, 'Location permission', 'Please enable location');
 
   return (
     <AppProvider>
