@@ -31,7 +31,7 @@ export const OriginList: React.FC<Props> = ({origin, title, onSelect}) => {
               handleSelect(item);
             }}>
             <View style={[styles.item, i !== dataLength ? styles.itemWithBorder : {}]}>
-              <Text>{item.name}</Text>
+              <Text style={styles.text}>{item.name}</Text>
             </View>
           </TouchableOpacity>
         ))}
