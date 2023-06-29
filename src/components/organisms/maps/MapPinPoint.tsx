@@ -1,5 +1,5 @@
 import {MAPBOX_TOKEN} from '@env';
-import Mapbox, {Location, PointAnnotation} from '@rnmapbox/maps';
+import Mapbox, {PointAnnotation} from '@rnmapbox/maps';
 import React, {useCallback, useRef, useState} from 'react';
 import {Image, StyleSheet} from 'react-native';
 
@@ -16,8 +16,9 @@ interface Props {
 
 export const MapPinPoint = React.memo(({onSelected, onUpdated}: Props) => {
   const pinPointRef = useRef<PointAnnotation>(null);
-  const [location, setLocation] = useState<Location>();
   const [hasDragged, setHasDragged] = useState(false);
+
+  const [selectedCoords, setSelectedCoords] = useState([0, 0]);
 
   const handlePinPoint = useCallback((feature: any) => {
     if (onSelected !== undefined) {
@@ -31,7 +32,8 @@ export const MapPinPoint = React.memo(({onSelected, onUpdated}: Props) => {
     }
 
     if (!hasDragged) {
-      setLocation(newLocation);
+      setSelectedCoords([newLocation.coords.longitude, newLocation.coords.latitude]);
+      pinPointRef.current?.refresh();
     }
   };
 
@@ -41,7 +43,7 @@ export const MapPinPoint = React.memo(({onSelected, onUpdated}: Props) => {
       <Mapbox.Camera followZoomLevel={ZOOM_LEVEL} followUserLocation />
       <PointAnnotation
         id={'pin'}
-        coordinate={[location?.coords.longitude ?? 0, location?.coords.latitude ?? 0]}
+        coordinate={selectedCoords}
         title={'Pin point'}
         draggable
         onDragStart={() => {
