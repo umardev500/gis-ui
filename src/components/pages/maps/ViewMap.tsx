@@ -1,16 +1,22 @@
 import {MapView} from '@components/organisms';
 import {colors} from '@constants/colors';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
-import React, {useCallback, useMemo, useRef} from 'react';
+import {RouteProp, useRoute} from '@react-navigation/native';
+import React, {useMemo, useRef} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
+import {RootStackParamList} from 'src/types';
+
+type ViewMapRouteProps = RouteProp<RootStackParamList, 'ViewMapScreen'>;
 
 export const ViewMap: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // route
+  const route = useRoute<ViewMapRouteProps>();
+  const {params} = route;
+
   // variables
   const snapPoints = useMemo(() => ['15%', '65%', '100%'], []);
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
 
   return (
     <View style={styles.container}>
@@ -21,25 +27,20 @@ export const ViewMap: React.FC = () => {
         }}
         ref={bottomSheetRef}
         index={0}
-        snapPoints={snapPoints}
-        onChange={handleSheetChanges}>
+        snapPoints={snapPoints}>
         <BottomSheetScrollView>
           <View style={styles.contentContainer}>
             <View
               style={{
                 flex: 1,
               }}>
-              <Image resizeMode="contain" style={styles.thumb} source={require('@assets/thumbs/thumb.jpg')} />
-              <Text style={styles.name}>Si Jalak Harupat 🎉</Text>
-              <Text style={styles.desc}>Lorem ipsum dolor is amet..</Text>
+              <Image resizeMode="contain" style={styles.thumb} source={{uri: params.picture}} />
+              <Text style={styles.name}>{params.name} 🎉</Text>
+              <Text style={styles.desc}>{params.description}</Text>
             </View>
           </View>
         </BottomSheetScrollView>
       </BottomSheet>
-
-      {/* <View style={styles.detailButton}>
-        <Button color={'white'} colorText={colors.gray[600]} text="Lihat Detail" />
-      </View> */}
     </View>
   );
 };
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
   },
   thumb: {
     width: '100%',
-    maxHeight: 380,
+    height: 380,
     borderRadius: 8,
     marginBottom: 24,
   },
