@@ -14,7 +14,7 @@ interface Props extends TextInputProps {
 
 export const Input = React.forwardRef<TextInput, Props>(({placeholder, containerStyles, editable = true, rightIcon, inputValue, inputStyle, ...props}, ref) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(inputValue?.value ?? '');
 
   const handleFocus = useCallback(() => {
     setIsFocused(true);

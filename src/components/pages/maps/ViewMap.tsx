@@ -3,16 +3,19 @@ import {MapView} from '@components/organisms';
 import {colors} from '@constants/colors';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {useLinking} from '@hooks/linking';
-import {RouteProp, useRoute} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {RootStackParamList} from 'src/types';
 
 type ViewMapRouteProps = RouteProp<RootStackParamList, 'ViewMapScreen'>;
+type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 
 export const ViewMap: React.FC = () => {
   const [coords, setCoords] = useState([0, 0]);
+  const navigation = useNavigation<StackProps>();
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -41,6 +44,10 @@ export const ViewMap: React.FC = () => {
     );
   }, []);
 
+  const handleUpdate = () => {
+    navigation.navigate('AddLocationScreen', params);
+  };
+
   return (
     <View style={styles.container}>
       <MapView coords={params.location.coordinates} />
@@ -62,6 +69,12 @@ export const ViewMap: React.FC = () => {
               <Text style={styles.desc}>{params.description}</Text>
               <View style={styles.directionBtn}>
                 <Button onPress={handleLinking} text="Open Direction" color={colors.gray[50]} colorText={colors.gray[600]} />
+                <View style={styles.groupBtn}>
+                  <View style={{flex: 1}}>
+                    <Button onPress={handleUpdate} text="Update" color={colors.blue[500]} />
+                  </View>
+                  <Button text="Delete" />
+                </View>
               </View>
             </View>
           </View>
@@ -103,5 +116,10 @@ const styles = StyleSheet.create({
   },
   directionBtn: {
     marginTop: 24,
+  },
+  groupBtn: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 16,
   },
 });

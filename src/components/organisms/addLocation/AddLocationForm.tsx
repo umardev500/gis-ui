@@ -3,7 +3,7 @@ import {colors} from '@constants/colors';
 import {OriginContext, OriginContextProp} from '@context/OriginContext';
 import {MAPBOX_TOKEN} from '@env';
 import {UploadData, useCreateCustomer, useUpload} from '@hooks/api';
-import {useNavigation} from '@react-navigation/native';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {setAccessToken} from '@rnmapbox/maps';
 import React, {useContext, useEffect, useRef, useState} from 'react';
@@ -16,6 +16,7 @@ import {MapPinPoint} from '../maps';
 
 setAccessToken(MAPBOX_TOKEN);
 
+type RouteProps = RouteProp<RootStackParamList, 'AddLocationScreen'>;
 type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 
 export const AddLocationForm: React.FC = () => {
@@ -23,12 +24,15 @@ export const AddLocationForm: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation<StackProps>();
+  const route = useRoute<RouteProps>();
+  const {params} = route;
+
   // upload data
   const [uploadData, setUploadData] = useState<UploadData>();
   // inputs value
-  const nameValue = useSharedValue('');
-  const phoneValue = useSharedValue('');
-  const descValue = useSharedValue('');
+  const nameValue = useSharedValue(params?.name ?? '');
+  const phoneValue = useSharedValue(params?.phone ?? '');
+  const descValue = useSharedValue(params?.description ?? '');
   // inputs ref
   const nameRef = useRef<TextInput>(null);
   const phoneRef = useRef<TextInput>(null);

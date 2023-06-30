@@ -5,7 +5,7 @@ export type RootStackParamList = {
   MainScreen: undefined;
   PinPoint: undefined;
   ViewMapScreen: CustomerProp;
-  AddLocationScreen: undefined;
+  AddLocationScreen: CustomerProp | undefined;
   OriginScreen: undefined;
   Setting: undefined;
 };
