@@ -2,11 +2,12 @@ import {Button} from '@components/atoms';
 import {MapView} from '@components/organisms';
 import {colors} from '@constants/colors';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
+import {useDeleteCustomer} from '@hooks/index';
 import {useLinking} from '@hooks/linking';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Alert, Image, StyleSheet, Text, ToastAndroid, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {RootStackParamList} from 'src/types';
 
@@ -48,6 +49,29 @@ export const ViewMap: React.FC = () => {
     navigation.navigate('AddLocationScreen', params);
   };
 
+  const deleteHandler = useDeleteCustomer();
+
+  const handleDelete = () => {
+    Alert.alert('Delete confirmation', 'Are you sure want to delete this place?', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          deleteHandler(params.id)
+            .then(() => {
+              ToastAndroid.show('Hapus data berhasil', ToastAndroid.SHORT);
+            })
+            .catch(err => {
+              ToastAndroid.show(err.message, ToastAndroid.SHORT);
+            });
+        },
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <MapView coords={params.location.coordinates} />
@@ -73,7 +97,7 @@ export const ViewMap: React.FC = () => {
                   <View style={{flex: 1}}>
                     <Button onPress={handleUpdate} text="Update" color={colors.blue[500]} />
                   </View>
-                  <Button text="Delete" />
+                  <Button onPress={handleDelete} text="Delete" />
                 </View>
               </View>
             </View>

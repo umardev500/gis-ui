@@ -2,7 +2,7 @@ import {AddressBtn, Button, Input, Loading} from '@components/atoms';
 import {colors} from '@constants/colors';
 import {OriginContext, OriginContextProp} from '@context/OriginContext';
 import {MAPBOX_TOKEN} from '@env';
-import {UploadData, useCreateCustomer, useUpload} from '@hooks/api';
+import {UploadData, useCreateCustomer, useUpdateCustomer, useUpload} from '@hooks/api';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {setAccessToken} from '@rnmapbox/maps';
@@ -26,6 +26,7 @@ export const AddLocationForm: React.FC = () => {
   const navigation = useNavigation<StackProps>();
   const route = useRoute<RouteProps>();
   const {params} = route;
+  const isUpdate = params !== undefined;
 
   // upload data
   const [uploadData, setUploadData] = useState<UploadData>();
@@ -57,6 +58,7 @@ export const AddLocationForm: React.FC = () => {
 
   // post handler
   const postHandler = useCreateCustomer();
+  const updateHandler = useUpdateCustomer();
 
   // reset
   const resetForm = () => {
@@ -72,6 +74,50 @@ export const AddLocationForm: React.FC = () => {
     const origin = originContext.origin;
     const coords = originContext.coords ?? currentCoords.value;
     const isFilledAll = nameValue.value !== '' && phoneValue.value !== '' && descValue.value !== '' && origin !== undefined && coords !== undefined && uploadData !== undefined;
+
+    if (isUpdate) {
+      setIsSubmitting(true);
+      const payload: Omit<CustomerPostProps, 'createdAt'> = {
+        name: nameValue.value,
+        phone: phoneValue.value,
+        province: {
+          id: origin?.province?.id ?? '',
+          name: origin?.province?.name ?? '',
+        },
+        city: {
+          id: origin?.city?.id ?? '',
+          name: origin?.city?.name ?? '',
+          province_id: origin?.province?.id ?? '',
+        },
+        district: {
+          id: origin?.district?.id ?? '',
+          name: origin?.district?.name ?? '',
+          regency_id: origin?.district?.regency_id ?? '',
+        },
+        location: {
+          type: 'Point',
+          coordinates: [coords.longitude, coords.latitude],
+        },
+        picture: uploadData?.url ?? '',
+        thumbnail: uploadData?.thumbUrl ?? '',
+        description: descValue.value,
+      };
+
+      updateHandler(payload, params.id)
+        .then(res => {
+          ToastAndroid.show(res.message, ToastAndroid.SHORT);
+          resetForm();
+        })
+        .catch((err: Error) => {
+          console.log(err);
+          ToastAndroid.show(err.message, ToastAndroid.SHORT);
+        })
+        .finally(() => {
+          setIsSubmitting(false);
+        });
+
+      return;
+    }
 
     if (!isFilledAll) {
       ToastAndroid.show('Isi semua data', ToastAndroid.SHORT);
