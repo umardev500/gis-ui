@@ -1,12 +1,13 @@
 import {Button} from '@components/atoms';
 import {MapView} from '@components/organisms';
 import {colors} from '@constants/colors';
+import {AuthContext, AuthContextProps} from '@context/AuthContext';
 import BottomSheet, {BottomSheetScrollView} from '@gorhom/bottom-sheet';
 import {useDeleteCustomer} from '@hooks/index';
 import {useLinking} from '@hooks/linking';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {Alert, Image, StyleSheet, Text, ToastAndroid, View} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {RootStackParamList} from 'src/types';
@@ -17,6 +18,8 @@ type StackProps = StackNavigationProp<RootStackParamList, 'AddLocationScreen'>;
 export const ViewMap: React.FC = () => {
   const [coords, setCoords] = useState([0, 0]);
   const navigation = useNavigation<StackProps>();
+  const authContext = useContext(AuthContext) as AuthContextProps;
+  const isGuest = authContext.isGuest;
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -93,12 +96,14 @@ export const ViewMap: React.FC = () => {
               <Text style={styles.desc}>{params.description}</Text>
               <View style={styles.directionBtn}>
                 <Button onPress={handleLinking} text="Open Direction" color={colors.gray[50]} colorText={colors.gray[600]} />
-                <View style={styles.groupBtn}>
-                  <View style={{flex: 1}}>
-                    <Button onPress={handleUpdate} text="Update" color={colors.blue[500]} />
+                {!isGuest ? (
+                  <View style={styles.groupBtn}>
+                    <View style={{flex: 1}}>
+                      <Button onPress={handleUpdate} text="Update" color={colors.blue[500]} />
+                    </View>
+                    <Button onPress={handleDelete} text="Delete" />
                   </View>
-                  <Button onPress={handleDelete} text="Delete" />
-                </View>
+                ) : null}
               </View>
             </View>
           </View>
