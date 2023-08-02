@@ -15,9 +15,10 @@ interface Props {
 }
 
 export const AppProvider: React.FC<Props> = ({children}) => {
+  const defaultServer = 'http://103.175.219.162';
   const [isNear, setIsNear] = useState(false);
   const storage = useLocalStorage();
-  const [server, setServer] = useState(storage.getString('server') ?? '');
+  const [server, setServer] = useState(storage.getString('server') ?? defaultServer);
 
   const data: AppContextType = {
     isNear,
