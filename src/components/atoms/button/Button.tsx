@@ -1,6 +1,6 @@
 import {colors} from '@constants/colors';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from 'react-native';
 
 interface Props {
   color?: string;
@@ -8,9 +8,10 @@ interface Props {
   text?: string;
   onPress?: () => void;
   loading?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
-export const Button: React.FC<Props> = ({color = colors.red[500], colorText = 'white', text, loading = false, onPress}) => {
+export const Button: React.FC<Props> = ({color = colors.red[500], colorText = 'white', text, loading = false, containerStyle, onPress}) => {
   text = loading ? 'Loading...' : text;
 
   return (
@@ -21,6 +22,7 @@ export const Button: React.FC<Props> = ({color = colors.red[500], colorText = 'w
           {
             backgroundColor: color,
           },
+          containerStyle,
         ]}>
         <Text
           style={[

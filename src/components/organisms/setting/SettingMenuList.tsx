@@ -5,7 +5,11 @@ import React, {useCallback, useContext} from 'react';
 import {FlatList, ListRenderItemInfo, StyleSheet, View} from 'react-native';
 import {SettingMenu} from 'src/types';
 
-export const SettingMenuList: React.FC = () => {
+interface Props {
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const SettingMenuList: React.FC<Props> = ({setModalVisible}) => {
   const logout = useLogout();
   const authContext = useContext(AuthContext) as AuthContextProps;
   const isGuest = authContext.isGuest;
@@ -15,6 +19,14 @@ export const SettingMenuList: React.FC = () => {
       title: 'Tambah Data',
       level: 'admin',
       screen: 'AddLocationScreen',
+    },
+    {
+      title: 'Server',
+      level: 'all',
+      screen: 'MainScreen',
+      onPressCallback: () => {
+        setModalVisible(true);
+      },
     },
     {
       title: 'Keluar',
