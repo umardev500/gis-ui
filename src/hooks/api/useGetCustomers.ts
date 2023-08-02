@@ -33,7 +33,7 @@ export const useGetCustomers = (isNear = false, refreshing: boolean) => {
   useEffect(() => {
     handler().catch(err => {
       console.log(err);
-      ToastAndroid.show('Failed to get customers', ToastAndroid.SHORT);
+      ToastAndroid.show(err.message, ToastAndroid.SHORT);
     });
   }, [isNear, refreshing]);
 
