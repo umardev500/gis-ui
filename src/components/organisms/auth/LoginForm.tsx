@@ -35,7 +35,7 @@ export const LoginForm: React.FC = () => {
 
       ToastAndroid.show('User not found', ToastAndroid.SHORT);
     } catch (err) {
-      ToastAndroid.show('Login failed', ToastAndroid.SHORT);
+      ToastAndroid.show((err as unknown as Error).message, ToastAndroid.SHORT);
     }
   };
 

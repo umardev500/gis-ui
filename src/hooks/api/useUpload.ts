@@ -13,6 +13,7 @@ interface ResponseAPI extends APIResponse {
 
 export const useUpload = () => {
   const endpoint = useGetBase('/upload', true);
+  console.log('endpoint:', endpoint);
 
   const handler = async (asset: Asset) => {
     const data = new FormData();

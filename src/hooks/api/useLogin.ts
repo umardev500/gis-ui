@@ -5,6 +5,7 @@ import {useGetBase} from '..';
 export const useLogin = () => {
   const endpoint = useGetBase('/auth/login');
   const [loading, setLoading] = useState(false);
+  console.log('login end:', endpoint);
 
   const handler = async (creds: AuthRequest): Promise<AuthResponse> => {
     setLoading(true);
