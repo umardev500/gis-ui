@@ -1,9 +1,7 @@
 import {AppContext, AppContextType} from '@context/AppContext';
-import {useContext, useEffect, useState} from 'react';
+import {useContext} from 'react';
 
 export const useGetBase = (path = '', isUpload = false) => {
-  const [pth, setPth] = useState('');
-
   const appContext = useContext(AppContext) as AppContextType;
   let prefix = '/app/api';
   if (isUpload) {
@@ -12,9 +10,5 @@ export const useGetBase = (path = '', isUpload = false) => {
 
   const pathFixed = `${appContext.server}${prefix}${path}`;
 
-  useEffect(() => {
-    setPth(pathFixed);
-  }, [appContext.server]);
-
-  return pth;
+  return pathFixed;
 };
