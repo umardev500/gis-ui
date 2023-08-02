@@ -1,7 +1,8 @@
 import {Button} from '@components/atoms';
 import {colors} from '@constants/colors';
-import React from 'react';
-import {Modal, StyleSheet, Text, TextInput, View} from 'react-native';
+import {AppContext, AppContextType} from '@context/AppContext';
+import React, {useContext, useState} from 'react';
+import {Modal, NativeSyntheticEvent, StyleSheet, Text, TextInput, TextInputChangeEventData, View} from 'react-native';
 
 interface Props {
   modalVisible: boolean;
@@ -9,6 +10,19 @@ interface Props {
 }
 
 export const ServerModal: React.FC<Props> = ({modalVisible, setModalVisible}) => {
+  const [text, setText] = useState('');
+  const appContext = useContext(AppContext) as AppContextType;
+
+  const handleSubmit = () => {
+    appContext.setServer(text);
+    setModalVisible(false);
+  };
+
+  const handleChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
+    const txt = e.nativeEvent.text;
+    setText(txt);
+  };
+
   return (
     <Modal
       visible={modalVisible}
@@ -19,8 +33,8 @@ export const ServerModal: React.FC<Props> = ({modalVisible, setModalVisible}) =>
       <View style={styles.modal}>
         <View style={styles.inner}>
           <Text style={styles.label}>Masukan alamat server</Text>
-          <TextInput style={styles.input} placeholder="https://lorem.com" />
-          <Button color={colors.blue[500]} containerStyle={styles.btn} />
+          <TextInput value={text} onChange={handleChange} style={styles.input} placeholder="https://lorem.com" />
+          <Button onPress={handleSubmit} color={colors.blue[500]} containerStyle={styles.btn} />
         </View>
       </View>
     </Modal>
