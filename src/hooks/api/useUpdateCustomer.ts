@@ -1,9 +1,8 @@
-import {getBase} from '@helpers';
 import {APIResponse, CustomerPostProps} from 'src/types';
-import {useLocalStorage} from '..';
+import {useGetBase, useLocalStorage} from '..';
 
 export const useUpdateCustomer = () => {
-  let endpoint = getBase('/customer');
+  let endpoint = useGetBase('/customer');
   const storage = useLocalStorage();
 
   const handler = async (payload: Omit<CustomerPostProps, 'createdAt'>, id: string): Promise<APIResponse> => {

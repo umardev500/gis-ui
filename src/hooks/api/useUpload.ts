@@ -1,6 +1,6 @@
-import {getBaseUpload} from '@helpers';
 import {Asset} from 'react-native-image-picker';
 import {APIResponse} from 'src/types';
+import {useGetBase} from '..';
 
 export interface UploadData {
   url: string;
@@ -12,7 +12,7 @@ interface ResponseAPI extends APIResponse {
 }
 
 export const useUpload = () => {
-  const endpoint = getBaseUpload('/upload');
+  const endpoint = useGetBase('/upload');
 
   const handler = async (asset: Asset) => {
     const data = new FormData();

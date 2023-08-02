@@ -1,9 +1,9 @@
-import {getBase} from '@helpers';
 import {useState} from 'react';
 import {AuthRequest, AuthResponse} from 'src/types';
+import {useGetBase} from '..';
 
 export const useLogin = () => {
-  const endpoint = getBase('/auth/login');
+  const endpoint = useGetBase('/auth/login');
   const [loading, setLoading] = useState(false);
 
   const handler = async (creds: AuthRequest): Promise<AuthResponse> => {

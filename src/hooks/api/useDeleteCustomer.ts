@@ -1,9 +1,8 @@
-import {getBase} from '@helpers';
 import {APIResponse} from 'src/types';
-import {useLocalStorage} from '..';
+import {useGetBase, useLocalStorage} from '..';
 
 export const useDeleteCustomer = () => {
-  let endpoint = getBase('/customer');
+  let endpoint = useGetBase('/customer');
   const storage = useLocalStorage();
 
   const handler = async (id: string): Promise<APIResponse> => {

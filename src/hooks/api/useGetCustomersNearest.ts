@@ -1,13 +1,13 @@
-import {getBase} from '@helpers';
 import {useEffect, useState} from 'react';
 import {ToastAndroid} from 'react-native';
 import {GetCustomersResponse} from 'src/types';
+import {useGetBase} from '..';
 
 export const useGetCustomersNearest = () => {
   const [customersResponse, setCustomersResponse] = useState<GetCustomersResponse>();
   const [loading, setLoading] = useState(true);
 
-  const endpoint = getBase('/customer/near?limit=8');
+  const endpoint = useGetBase('/customer/near?limit=8');
 
   const handler = async (): Promise<void> => {
     try {
