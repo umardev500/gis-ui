@@ -1,3 +1,4 @@
+import {useLocalStorage} from '@hooks/storage';
 import React, {useState} from 'react';
 
 export const AppContext = React.createContext({});
@@ -15,7 +16,8 @@ interface Props {
 
 export const AppProvider: React.FC<Props> = ({children}) => {
   const [isNear, setIsNear] = useState(false);
-  const [server, setServer] = useState('');
+  const storage = useLocalStorage();
+  const [server, setServer] = useState(storage.getString('server') ?? '');
 
   const data: AppContextType = {
     isNear,

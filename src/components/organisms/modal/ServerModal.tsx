@@ -1,6 +1,7 @@
 import {Button} from '@components/atoms';
 import {colors} from '@constants/colors';
 import {AppContext, AppContextType} from '@context/AppContext';
+import {useLocalStorage} from '@hooks/storage';
 import React, {useContext, useState} from 'react';
 import {Modal, NativeSyntheticEvent, StyleSheet, Text, TextInput, TextInputChangeEventData, View} from 'react-native';
 
@@ -12,10 +13,12 @@ interface Props {
 export const ServerModal: React.FC<Props> = ({modalVisible, setModalVisible}) => {
   const [text, setText] = useState('');
   const appContext = useContext(AppContext) as AppContextType;
+  const storage = useLocalStorage();
 
   const handleSubmit = () => {
     appContext.setServer(text);
     setModalVisible(false);
+    storage.set('server', text);
   };
 
   const handleChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
